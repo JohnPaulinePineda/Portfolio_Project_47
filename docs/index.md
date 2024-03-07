@@ -24,12 +24,12 @@
     * [1.6 Linear Regression Model Coefficient Estimation](#1.6)
         * [1.6.1 Premodelling Data Description](#1.6.1)
         * [1.6.2 Normal Equations](#1.6.2)
-        * [1.6.3 Gradient Descent Algorithm with Very High Learning Rate and Low Epoch Count ](#1.6.3)
-        * [1.6.4 Gradient Descent Algorithm with Very High Learning Rate and High Epoch Count](#1.6.4)
-        * [1.6.5 Gradient Descent Algorithm with High Learning Rate and Low Epoch Count](#1.6.5)
-        * [1.6.6 Gradient Descent Algorithm with High Learning Rate and High Epoch Count](#1.6.6)
-        * [1.6.7 Gradient Descent Algorithm with Low Learning Rate and Low Epoch Count](#1.6.7)
-        * [1.6.8 Gradient Descent Algorithm with Low Learning Rate and High Epoch Count](#1.6.8)
+        * [1.6.3 Batch Gradient Descent Algorithm with Low Learning Rate](#1.6.3)
+        * [1.6.4 Batch Gradient Descent Algorithm with High Learning Rate](#1.6.4)
+        * [1.6.5 Stochastic Gradient Descent Algorithm with Low Learning Rate](#1.6.5)
+        * [1.6.6 Stochastic Gradient Descent Algorithm with High Learning Rate](#1.6.6)
+        * [1.6.7 Mini-Batch Gradient Descent Algorithm with Low Learning Rate](#1.6.7)
+        * [1.6.8 Mini-Batch Gradient Descent Algorithm with High Learning Rate](#1.6.8)
     * [1.7 Consolidated Findings](#1.7)
 * [**2. Summary**](#Summary)   
 * [**3. References**](#References)
@@ -5425,7 +5425,7 @@ y = cancer_rate_premodelling.CANRAT
 # Formulating the train and test data
 # using a 70-30 ratio
 ##################################
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state= 88888888)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.385, random_state= 88888888)
 ```
 
 
@@ -5441,7 +5441,7 @@ display(X_train.shape)
     
 
 
-    (114, 2)
+    (100, 2)
 
 
 ### 1.6.2 Normal Equations <a class="anchor" id="1.6.2"></a>
@@ -5509,17 +5509,17 @@ display(linear_regression_normal_equations)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.000606</td>
+      <td>-0.030898</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.233418</td>
+      <td>0.249436</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.508083</td>
+      <td>0.517370</td>
     </tr>
   </tbody>
 </table>
@@ -5592,19 +5592,19 @@ display(linear_regression_scikitlearn_computations)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.000606</td>
+      <td>-0.030898</td>
       <td>Normal_Equations</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.233418</td>
+      <td>0.249436</td>
       <td>Normal_Equations</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.508083</td>
+      <td>0.517370</td>
       <td>Normal_Equations</td>
     </tr>
   </tbody>
@@ -5624,9 +5624,11 @@ theta_1 = 0.233418
 theta_2 = 0.508083
 ```
 
-### 1.6.3 Gradient Descent Algorithm with Very High Learning Rate and Low Epoch Count <a class="anchor" id="1.6.3"></a>
+### 1.6.3 Batch Gradient Descent Algorithm with Low Learning Rate <a class="anchor" id="1.6.3"></a>
 
-[Gradient descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. This particular implementation used Batch Gradient Descent which computes the gradient of the loss function with respect to the parameters for the entire data set. A very high learning rate (also referred to as step size or the alpha) and low epoch count were applied resulting in larger steps with lesser risks of overshooting the minimum due to a lower number of iterations.
+[Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
+
+[Full Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses the entire training dataset to compute the gradients of the loss function with respect to the model parameters. The gradients are computed for all training examples simultaneously, and then the model parameters are updated accordingly. This approach provides the most accurate estimate of the gradient, as it considers all data points. However, it can be computationally expensive, especially for large datasets, because it requires processing the entire dataset in each iteration. Despite its computational cost, full batch gradient descent is guaranteed to converge to the global minimum of the loss function, assuming the learning rate is appropriately chosen and the loss function is convex.
 
 1. The gradient descent algorithm was implemented with parameter settings described as follows:
     * <span style="color: #FF0000">Learning Rate</span> = 1.00 (Very High)
@@ -5767,7 +5769,7 @@ loss_vector_vhlearningrate_lepochcount
 
 
 
-    53.54705756819414
+    46.724657974933976
 
 
 
@@ -5819,19 +5821,19 @@ display(linear_regression_gradientdescent_vhlearningrate_lepochcount)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.008008</td>
+      <td>-0.030376</td>
       <td>VeryHighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.281761</td>
+      <td>0.255560</td>
       <td>VeryHighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.549961</td>
+      <td>0.515369</td>
       <td>VeryHighLearningRate_LowEpochCount</td>
     </tr>
   </tbody>
@@ -5839,9 +5841,11 @@ display(linear_regression_gradientdescent_vhlearningrate_lepochcount)
 </div>
 
 
-### 1.6.4 Gradient Descent Algorithm with Very High Learning Rate and High Epoch Count <a class="anchor" id="1.6.4"></a>
+### 1.6.4 Batch Gradient Descent Algorithm with High Learning Rate <a class="anchor" id="1.6.4"></a>
 
-[Gradient descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. This particular implementation used Batch Gradient Descent which computes the gradient of the loss function with respect to the parameters for the entire data set. A very high learning rate (also referred to as step size or the alpha) and high epoch count were applied resulting in larger steps with more risks of overshooting the minimum due to a higher number of iterations.
+[Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
+
+[Full Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses the entire training dataset to compute the gradients of the loss function with respect to the model parameters. The gradients are computed for all training examples simultaneously, and then the model parameters are updated accordingly. This approach provides the most accurate estimate of the gradient, as it considers all data points. However, it can be computationally expensive, especially for large datasets, because it requires processing the entire dataset in each iteration. Despite its computational cost, full batch gradient descent is guaranteed to converge to the global minimum of the loss function, assuming the learning rate is appropriately chosen and the loss function is convex.
 
 1. The gradient descent algorithm was implemented with parameter settings described as follows:
     * <span style="color: #FF0000">Learning Rate</span> = 1.00 (Very High)
@@ -5898,7 +5902,7 @@ loss_vector_vhlearningrate_hepochcount
 
 
 
-    52.38026912784726
+    46.72155321049482
 
 
 
@@ -5949,19 +5953,19 @@ display(linear_regression_gradientdescent_vhlearningrate_hepochcount)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.000606</td>
+      <td>-0.030898</td>
       <td>VeryHighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.233418</td>
+      <td>0.249436</td>
       <td>VeryHighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.508083</td>
+      <td>0.517370</td>
       <td>VeryHighLearningRate_HighEpochCount</td>
     </tr>
   </tbody>
@@ -5969,9 +5973,11 @@ display(linear_regression_gradientdescent_vhlearningrate_hepochcount)
 </div>
 
 
-### 1.6.5 Gradient Descent Algorithm with High Learning Rate and Low Epoch Count <a class="anchor" id="1.6.5"></a>
+### 1.6.5 Stochastic Gradient Descent Algorithm with Low Learning Rate <a class="anchor" id="1.6.5"></a>
 
-[Gradient descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. This particular implementation used Batch Gradient Descent which computes the gradient of the loss function with respect to the parameters for the entire data set. A sufficiently high learning rate (also referred to as step size or the alpha) and low epoch count were applied resulting in average steps with more risks of not reaching the minimum due to a lower number of iterations.
+[Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
+
+[Stochastic Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses only one randomly selected training example at each iteration to compute the gradient of the loss function. The model parameters are updated based on the gradient computed from this single example. Since this approach updates the parameters more frequently with noisy estimates of the gradient, it tends to have more frequent but noisy updates, leading to faster convergence in terms of wall-clock time compared to full batch gradient descent. However, the stochastic nature of the updates can cause oscillations in the training process, and the updates may not accurately represent the true direction of the gradient.
 
 1. The gradient descent algorithm was implemented with parameter settings described as follows:
     * <span style="color: #FF0000">Learning Rate</span> = 0.10 (High)
@@ -6028,7 +6034,7 @@ loss_vector_hlearningrate_lepochcount
 
 
 
-    54.315668691393675
+    48.60570014809525
 
 
 
@@ -6079,19 +6085,19 @@ display(linear_regression_gradientdescent_hlearningrate_lepochcount)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.110662</td>
+      <td>0.086883</td>
       <td>HighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.317843</td>
+      <td>0.357444</td>
       <td>HighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.413052</td>
+      <td>0.403003</td>
       <td>HighLearningRate_LowEpochCount</td>
     </tr>
   </tbody>
@@ -6099,9 +6105,11 @@ display(linear_regression_gradientdescent_hlearningrate_lepochcount)
 </div>
 
 
-### 1.6.6 Gradient Descent Algorithm with High Learning Rate and High Epoch Count <a class="anchor" id="1.6.6"></a>
+### 1.6.6 Stochastic Gradient Descent Algorithm with High Learning Rate <a class="anchor" id="1.6.6"></a>
 
-[Gradient descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. This particular implementation used Batch Gradient Descent which computes the gradient of the loss function with respect to the parameters for the entire data set. A sufficiently high learning rate (also referred to as step size or the alpha) and low epoch count were applied resulting in average steps with lesser risks of not reaching the minimum as compensated by the higher number of iterations.
+[Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
+
+[Stochastic Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses only one randomly selected training example at each iteration to compute the gradient of the loss function. The model parameters are updated based on the gradient computed from this single example. Since this approach updates the parameters more frequently with noisy estimates of the gradient, it tends to have more frequent but noisy updates, leading to faster convergence in terms of wall-clock time compared to full batch gradient descent. However, the stochastic nature of the updates can cause oscillations in the training process, and the updates may not accurately represent the true direction of the gradient.
 
 1. The gradient descent algorithm was implemented with parameter settings described as follows:
     * <span style="color: #FF0000">Learning Rate</span> = 0.10 (High)
@@ -6158,7 +6166,7 @@ loss_vector_hlearningrate_hepochcount
 
 
 
-    52.380634424224674
+    46.72212666029538
 
 
 
@@ -6209,19 +6217,19 @@ display(linear_regression_gradientdescent_hlearningrate_hepochcount)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.000585</td>
+      <td>-0.030696</td>
       <td>HighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.237033</td>
+      <td>0.254291</td>
       <td>HighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.504420</td>
+      <td>0.512383</td>
       <td>HighLearningRate_HighEpochCount</td>
     </tr>
   </tbody>
@@ -6229,9 +6237,11 @@ display(linear_regression_gradientdescent_hlearningrate_hepochcount)
 </div>
 
 
-### 1.6.7 Gradient Descent Algorithm with Low Learning Rate and Low Epoch Count <a class="anchor" id="1.6.7"></a>
+### 1.6.7 Mini-Batch Gradient Descent Algorithm with Low Learning Rate <a class="anchor" id="1.6.7"></a>
 
-[Gradient descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. This particular implementation used Batch Gradient Descent which computes the gradient of the loss function with respect to the parameters for the entire data set. A low learning rate (also referred to as step size or the alpha) and low epoch count were applied resulting in smaller steps with higher risks of not reaching the minimum due to the smaller number of iterations.
+[Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
+
+[Mini-Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) serves as a compromise between full batch gradient descent and stochastic gradient descent. Instead of processing the entire dataset or just one example at a time, mini-batch gradient descent divides the dataset into small batches of fixed size. The gradients are computed for each mini-batch, and the model parameters are updated based on the average gradient computed from the mini-batch. This approach combines the advantages of both full batch and stochastic gradient descent. It provides more stable updates compared to stochastic gradient descent while being computationally more efficient than full batch gradient descent. The batch size can be adjusted based on computational resources and desired convergence properties.
 
 1. The gradient descent algorithm was implemented with parameter settings described as follows:
     * <span style="color: #FF0000">Learning Rate</span> = 0.01 (Low)
@@ -6288,7 +6298,7 @@ loss_vector_llearningrate_lepochcount
 
 
 
-    1631.7037156372799
+    1435.4907039400766
 
 
 
@@ -6339,19 +6349,19 @@ display(linear_regression_gradientdescent_llearningrate_lepochcount)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>2.133856</td>
+      <td>2.143519</td>
       <td>LowLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>1.811625</td>
+      <td>1.868917</td>
       <td>LowLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>1.831115</td>
+      <td>1.875042</td>
       <td>LowLearningRate_LowEpochCount</td>
     </tr>
   </tbody>
@@ -6359,9 +6369,11 @@ display(linear_regression_gradientdescent_llearningrate_lepochcount)
 </div>
 
 
-### 1.6.8 Gradient Descent Algorithm with Low Learning Rate and High Epoch Count <a class="anchor" id="1.6.8"></a>
+### 1.6.8 Mini-Batch Gradient Descent Algorithm with High Learning Rate <a class="anchor" id="1.6.8"></a>
 
-[Gradient descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. This particular implementation used Batch Gradient Descent which computes the gradient of the loss function with respect to the parameters for the entire data set. A low learning rate (also referred to as step size or the alpha) and low epoch count were applied resulting in smaller steps with lesser risks of not reaching the minimum as compensated by the smaller number of iterations.
+[Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
+
+[Mini-Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) serves as a compromise between full batch gradient descent and stochastic gradient descent. Instead of processing the entire dataset or just one example at a time, mini-batch gradient descent divides the dataset into small batches of fixed size. The gradients are computed for each mini-batch, and the model parameters are updated based on the average gradient computed from the mini-batch. This approach combines the advantages of both full batch and stochastic gradient descent. It provides more stable updates compared to stochastic gradient descent while being computationally more efficient than full batch gradient descent. The batch size can be adjusted based on computational resources and desired convergence properties.
 
 1. The gradient descent algorithm was implemented with parameter settings described as follows:
     * <span style="color: #FF0000">Learning Rate</span> = 0.01 (Low)
@@ -6418,7 +6430,7 @@ loss_vector_llearningrate_hepochcount
 
 
 
-    54.50204042343665
+    48.78586259037199
 
 
 
@@ -6469,19 +6481,19 @@ display(linear_regression_gradientdescent_llearningrate_hepochcount)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.128061</td>
+      <td>0.104862</td>
       <td>LowLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.320584</td>
+      <td>0.360852</td>
       <td>LowLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.415517</td>
+      <td>0.406642</td>
       <td>LowLearningRate_HighEpochCount</td>
     </tr>
   </tbody>
@@ -6542,127 +6554,127 @@ display(linear_regression_methods)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.000606</td>
+      <td>-0.030898</td>
       <td>Normal_Equations</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.233418</td>
+      <td>0.249436</td>
       <td>Normal_Equations</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.508083</td>
+      <td>0.517370</td>
       <td>Normal_Equations</td>
     </tr>
     <tr>
       <th>3</th>
       <td>INTERCEPT</td>
-      <td>0.008008</td>
+      <td>-0.030376</td>
       <td>VeryHighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>4</th>
       <td>LIFEXP</td>
-      <td>0.281761</td>
+      <td>0.255560</td>
       <td>VeryHighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>5</th>
       <td>GDPCAP</td>
-      <td>0.549961</td>
+      <td>0.515369</td>
       <td>VeryHighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>6</th>
       <td>INTERCEPT</td>
-      <td>-0.000606</td>
+      <td>-0.030898</td>
       <td>VeryHighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>7</th>
       <td>LIFEXP</td>
-      <td>0.233418</td>
+      <td>0.249436</td>
       <td>VeryHighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>8</th>
       <td>GDPCAP</td>
-      <td>0.508083</td>
+      <td>0.517370</td>
       <td>VeryHighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>9</th>
       <td>INTERCEPT</td>
-      <td>0.110662</td>
+      <td>0.086883</td>
       <td>HighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>10</th>
       <td>LIFEXP</td>
-      <td>0.317843</td>
+      <td>0.357444</td>
       <td>HighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>11</th>
       <td>GDPCAP</td>
-      <td>0.413052</td>
+      <td>0.403003</td>
       <td>HighLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>12</th>
       <td>INTERCEPT</td>
-      <td>-0.000585</td>
+      <td>-0.030696</td>
       <td>HighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>13</th>
       <td>LIFEXP</td>
-      <td>0.237033</td>
+      <td>0.254291</td>
       <td>HighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>14</th>
       <td>GDPCAP</td>
-      <td>0.504420</td>
+      <td>0.512383</td>
       <td>HighLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>15</th>
       <td>INTERCEPT</td>
-      <td>2.133856</td>
+      <td>2.143519</td>
       <td>LowLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>16</th>
       <td>LIFEXP</td>
-      <td>1.811625</td>
+      <td>1.868917</td>
       <td>LowLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>17</th>
       <td>GDPCAP</td>
-      <td>1.831115</td>
+      <td>1.875042</td>
       <td>LowLearningRate_LowEpochCount</td>
     </tr>
     <tr>
       <th>18</th>
       <td>INTERCEPT</td>
-      <td>0.128061</td>
+      <td>0.104862</td>
       <td>LowLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>19</th>
       <td>LIFEXP</td>
-      <td>0.320584</td>
+      <td>0.360852</td>
       <td>LowLearningRate_HighEpochCount</td>
     </tr>
     <tr>
       <th>20</th>
       <td>GDPCAP</td>
-      <td>0.415517</td>
+      <td>0.406642</td>
       <td>LowLearningRate_HighEpochCount</td>
     </tr>
   </tbody>
@@ -6723,33 +6735,33 @@ linear_regression_methods_plot
   <tbody>
     <tr>
       <th>INTERCEPT</th>
-      <td>-0.000606</td>
-      <td>0.008008</td>
-      <td>-0.000606</td>
-      <td>0.110662</td>
-      <td>-0.000585</td>
-      <td>2.133856</td>
-      <td>0.128061</td>
+      <td>-0.030898</td>
+      <td>-0.030376</td>
+      <td>-0.030898</td>
+      <td>0.086883</td>
+      <td>-0.030696</td>
+      <td>2.143519</td>
+      <td>0.104862</td>
     </tr>
     <tr>
       <th>LIFEXP</th>
-      <td>0.233418</td>
-      <td>0.281761</td>
-      <td>0.233418</td>
-      <td>0.317843</td>
-      <td>0.237033</td>
-      <td>1.811625</td>
-      <td>0.320584</td>
+      <td>0.249436</td>
+      <td>0.255560</td>
+      <td>0.249436</td>
+      <td>0.357444</td>
+      <td>0.254291</td>
+      <td>1.868917</td>
+      <td>0.360852</td>
     </tr>
     <tr>
       <th>GDPCAP</th>
-      <td>0.508083</td>
-      <td>0.549961</td>
-      <td>0.508083</td>
-      <td>0.413052</td>
-      <td>0.504420</td>
-      <td>1.831115</td>
-      <td>0.415517</td>
+      <td>0.517370</td>
+      <td>0.515369</td>
+      <td>0.517370</td>
+      <td>0.403003</td>
+      <td>0.512383</td>
+      <td>1.875042</td>
+      <td>0.406642</td>
     </tr>
   </tbody>
 </table>
