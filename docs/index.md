@@ -6127,7 +6127,7 @@ loss_vector_sgd_llearningrate
 
 
 
-    0.24434737806731677
+    0.24163341951489312
 
 
 
@@ -6178,19 +6178,19 @@ display(linear_regression_sgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.006076</td>
+      <td>0.011752</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.300746</td>
+      <td>0.314076</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.322506</td>
+      <td>0.335116</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -6292,7 +6292,7 @@ loss_vector_sgd_hlearningrate
 
 
 
-    0.2438713765233921
+    0.2555074551439548
 
 
 
@@ -6343,19 +6343,19 @@ display(linear_regression_sgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.039492</td>
+      <td>0.171542</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.002918</td>
+      <td>0.170660</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.767183</td>
+      <td>0.538143</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6532,19 +6532,19 @@ display(linear_regression_mbgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.039492</td>
+      <td>0.171542</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.002918</td>
+      <td>0.170660</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.767183</td>
+      <td>0.538143</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -6697,19 +6697,19 @@ display(linear_regression_mbgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.039492</td>
+      <td>0.171542</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.002918</td>
+      <td>0.170660</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.767183</td>
+      <td>0.538143</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6823,73 +6823,73 @@ display(linear_regression_methods)
     <tr>
       <th>9</th>
       <td>INTERCEPT</td>
-      <td>0.006076</td>
+      <td>0.011752</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>10</th>
       <td>LIFEXP</td>
-      <td>0.300746</td>
+      <td>0.314076</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>11</th>
       <td>GDPCAP</td>
-      <td>0.322506</td>
+      <td>0.335116</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>12</th>
       <td>INTERCEPT</td>
-      <td>0.039492</td>
+      <td>0.171542</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>13</th>
       <td>LIFEXP</td>
-      <td>0.002918</td>
+      <td>0.170660</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>14</th>
       <td>GDPCAP</td>
-      <td>0.767183</td>
+      <td>0.538143</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>15</th>
       <td>INTERCEPT</td>
-      <td>0.039492</td>
+      <td>0.171542</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>16</th>
       <td>LIFEXP</td>
-      <td>0.002918</td>
+      <td>0.170660</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>17</th>
       <td>GDPCAP</td>
-      <td>0.767183</td>
+      <td>0.538143</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>18</th>
       <td>INTERCEPT</td>
-      <td>0.039492</td>
+      <td>0.171542</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>19</th>
       <td>LIFEXP</td>
-      <td>0.002918</td>
+      <td>0.170660</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>20</th>
       <td>GDPCAP</td>
-      <td>0.767183</td>
+      <td>0.538143</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6953,30 +6953,30 @@ linear_regression_methods_plot
       <td>-0.030898</td>
       <td>-0.003588</td>
       <td>-0.030898</td>
-      <td>0.006076</td>
-      <td>0.039492</td>
-      <td>0.039492</td>
-      <td>0.039492</td>
+      <td>0.011752</td>
+      <td>0.171542</td>
+      <td>0.171542</td>
+      <td>0.171542</td>
     </tr>
     <tr>
       <th>LIFEXP</th>
       <td>0.249436</td>
       <td>0.305487</td>
       <td>0.249438</td>
-      <td>0.300746</td>
-      <td>0.002918</td>
-      <td>0.002918</td>
-      <td>0.002918</td>
+      <td>0.314076</td>
+      <td>0.170660</td>
+      <td>0.170660</td>
+      <td>0.170660</td>
     </tr>
     <tr>
       <th>GDPCAP</th>
       <td>0.517370</td>
       <td>0.327332</td>
       <td>0.517368</td>
-      <td>0.322506</td>
-      <td>0.767183</td>
-      <td>0.767183</td>
-      <td>0.767183</td>
+      <td>0.335116</td>
+      <td>0.538143</td>
+      <td>0.538143</td>
+      <td>0.538143</td>
     </tr>
   </tbody>
 </table>
@@ -7006,7 +7006,7 @@ for container in linear_regression_coefficent_estimation_methods_plot.containers
 # 2. Summary <a class="anchor" id="Summary"></a>
 
 
-
+![Project47_Summary.png](attachment:dbac6828-ae51-4ea9-9013-e9a2757e9f06.png)
 
 # 3. References <a class="anchor" id="References"></a>
 
@@ -7093,7 +7093,7 @@ for container in linear_regression_coefficent_estimation_methods_plot.containers
 * **[Article]** [Difference between Batch Gradient Descent and Stochastic Gradient Descent](https://www.geeksforgeeks.org/difference-between-batch-gradient-descent-and-stochastic-gradient-descent/) by Geeks for Geeks Team
 * **[Article]** [Variants of Gradient Descent Algorithm](https://www.analyticsvidhya.com/blog/2021/03/variants-of-gradient-descent-algorithm/) by Himanshi Singh (Analytics Vidhya)
 * **[Article]** [Difference Between SGD, GD, and Mini-batch GD](https://www.tutorialspoint.com/difference-between-sgd-gd-and-mini-batch-gd) by Jay Singh (TutorialsPoint)
-* **[Article]** [Batch , Mini Batch and Stochastic Gradient Descent](https://sweta-nit.medium.com/batch-mini-batch-and-stochastic-gradient-descent-e9bc4cacd461) by Sweta (Mediuma)
+* **[Article]** [Batch , Mini Batch and Stochastic Gradient Descent](https://sweta-nit.medium.com/batch-mini-batch-and-stochastic-gradient-descent-e9bc4cacd461) by Sweta (Medium)
 * **[Article]** [A Gentle Introduction to Mini-Batch Gradient Descent and How to Configure Batch Size](https://machinelearningmastery.com/gentle-introduction-mini-batch-gradient-descent-configure-batch-size/) by Jason Brownlee (Machine Learning Mastery)
 * **[Article]** [Batch vs Mini-batch vs Stochastic Gradient Descent with Code Examples](https://medium.datadriveninvestor.com/batch-vs-mini-batch-vs-stochastic-gradient-descent-with-code-examples-cd8232174e14) by Matheus Jacques (Medium)
 * **[Article]** [Batch vs Stochastic vs Mini Batch Gradient Descent Techniques](https://medium.com/@amannagrawall002/batch-vs-stochastic-vs-mini-batch-gradient-descent-techniques-7dfe6f963a6f) by Aman Agrawal (Medium)
