@@ -38,7 +38,7 @@
 
 # 1. Table of Contents <a class="anchor" id="TOC"></a>
 
-This project manually implements the **Batch Gradient Descent**, **Stochastic Gradient Descent** and **Mini-Batch Gradient Descent** algorithms using various helpful packages in <mark style="background-color: #CCECFF"><b>Python</b></mark>, and evaluates a range of values for the learning rate to optimally estimate the coefficients of a linear regression model. The cost function optimization profiles of the different candidate parameter settings were compared, with the resulting estimated coefficients assessed against those obtained using normal equations which served as the reference baseline values. All results were consolidated in a [<span style="color: #FF0000"><b>Summary</b></span>](#Summary) presented at the end of the document.
+This project manually implements the **Batch Gradient Descent**, **Stochastic Gradient Descent** and **Mini-Batch Gradient Descent** algorithms using various helpful packages in <mark style="background-color: #CCECFF"><b>Python</b></mark>, and evaluates a range of values for the learning rate to optimally estimate the coefficients of a linear regression model. The gradient descent path and cost function optimization profiles of the different candidate parameter settings were compared, with the resulting estimated coefficients assessed against those obtained using normal equations which served as the reference baseline values. All results were consolidated in a [<span style="color: #FF0000"><b>Summary</b></span>](#Summary) presented at the end of the document.
 
 [Linear Regression](https://link.springer.com/book/10.1007/978-1-4757-3462-1) explores the linear relationship between a scalar response and one or more covariates by having the conditional mean of the dependent variable be an affine function of the independent variables. The relationship is modeled through a disturbance term which represents an unobserved random variable that adds noise. The algorithm is typically formulated from the data using the least squares method which seeks to estimate the coefficients by minimizing the squared residual function. The linear equation assigns one scale factor represented by a coefficient to each covariate and an additional coefficient called the intercept or the bias coefficient which gives the line an additional degree of freedom allowing to move up and down a two-dimensional plot.
 
@@ -6127,7 +6127,7 @@ loss_vector_sgd_llearningrate
 
 
 
-    0.24163341951489312
+    0.2416227708297828
 
 
 
@@ -6178,19 +6178,19 @@ display(linear_regression_sgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.011752</td>
+      <td>0.015465</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.314076</td>
+      <td>0.316440</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.335116</td>
+      <td>0.334472</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -6292,7 +6292,7 @@ loss_vector_sgd_hlearningrate
 
 
 
-    0.2555074551439548
+    0.3410083587072063
 
 
 
@@ -6343,19 +6343,19 @@ display(linear_regression_sgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.171542</td>
+      <td>0.046194</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.170660</td>
+      <td>0.124065</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.538143</td>
+      <td>0.152346</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6532,19 +6532,19 @@ display(linear_regression_mbgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.171542</td>
+      <td>0.046194</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.170660</td>
+      <td>0.124065</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.538143</td>
+      <td>0.152346</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -6697,19 +6697,19 @@ display(linear_regression_mbgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.171542</td>
+      <td>0.046194</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.170660</td>
+      <td>0.124065</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.538143</td>
+      <td>0.152346</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6823,73 +6823,73 @@ display(linear_regression_methods)
     <tr>
       <th>9</th>
       <td>INTERCEPT</td>
-      <td>0.011752</td>
+      <td>0.015465</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>10</th>
       <td>LIFEXP</td>
-      <td>0.314076</td>
+      <td>0.316440</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>11</th>
       <td>GDPCAP</td>
-      <td>0.335116</td>
+      <td>0.334472</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>12</th>
       <td>INTERCEPT</td>
-      <td>0.171542</td>
+      <td>0.046194</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>13</th>
       <td>LIFEXP</td>
-      <td>0.170660</td>
+      <td>0.124065</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>14</th>
       <td>GDPCAP</td>
-      <td>0.538143</td>
+      <td>0.152346</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>15</th>
       <td>INTERCEPT</td>
-      <td>0.171542</td>
+      <td>0.046194</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>16</th>
       <td>LIFEXP</td>
-      <td>0.170660</td>
+      <td>0.124065</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>17</th>
       <td>GDPCAP</td>
-      <td>0.538143</td>
+      <td>0.152346</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>18</th>
       <td>INTERCEPT</td>
-      <td>0.171542</td>
+      <td>0.046194</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>19</th>
       <td>LIFEXP</td>
-      <td>0.170660</td>
+      <td>0.124065</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>20</th>
       <td>GDPCAP</td>
-      <td>0.538143</td>
+      <td>0.152346</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6953,30 +6953,30 @@ linear_regression_methods_plot
       <td>-0.030898</td>
       <td>-0.003588</td>
       <td>-0.030898</td>
-      <td>0.011752</td>
-      <td>0.171542</td>
-      <td>0.171542</td>
-      <td>0.171542</td>
+      <td>0.015465</td>
+      <td>0.046194</td>
+      <td>0.046194</td>
+      <td>0.046194</td>
     </tr>
     <tr>
       <th>LIFEXP</th>
       <td>0.249436</td>
       <td>0.305487</td>
       <td>0.249438</td>
-      <td>0.314076</td>
-      <td>0.170660</td>
-      <td>0.170660</td>
-      <td>0.170660</td>
+      <td>0.316440</td>
+      <td>0.124065</td>
+      <td>0.124065</td>
+      <td>0.124065</td>
     </tr>
     <tr>
       <th>GDPCAP</th>
       <td>0.517370</td>
       <td>0.327332</td>
       <td>0.517368</td>
-      <td>0.335116</td>
-      <td>0.538143</td>
-      <td>0.538143</td>
-      <td>0.538143</td>
+      <td>0.334472</td>
+      <td>0.152346</td>
+      <td>0.152346</td>
+      <td>0.152346</td>
     </tr>
   </tbody>
 </table>
