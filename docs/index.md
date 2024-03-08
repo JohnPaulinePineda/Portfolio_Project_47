@@ -38,7 +38,7 @@
 
 # 1. Table of Contents <a class="anchor" id="TOC"></a>
 
-This project manually implements the **Gradient Descent** algorithm using various helpful packages in <mark style="background-color: #CCECFF"><b>Python</b></mark>, and evaluates a range of values for the learning rate and epoch count parameters to optimally estimate the coefficients of a linear regression model. The cost function optimization profiles of the different candidate parameter settings were compared, with the resulting estimated coefficients assessed against those obtained using normal equations which served as the reference baseline values. All results were consolidated in a [<span style="color: #FF0000"><b>Summary</b></span>](#Summary) presented at the end of the document.
+This project manually implements the **Batch Gradient Descent**, **Stochastic Gradient Descent** and **Mini-Batch Gradient Descent** algorithms using various helpful packages in <mark style="background-color: #CCECFF"><b>Python</b></mark>, and evaluates a range of values for the learning rate to optimally estimate the coefficients of a linear regression model. The cost function optimization profiles of the different candidate parameter settings were compared, with the resulting estimated coefficients assessed against those obtained using normal equations which served as the reference baseline values. All results were consolidated in a [<span style="color: #FF0000"><b>Summary</b></span>](#Summary) presented at the end of the document.
 
 [Linear Regression](https://link.springer.com/book/10.1007/978-1-4757-3462-1) explores the linear relationship between a scalar response and one or more covariates by having the conditional mean of the dependent variable be an affine function of the independent variables. The relationship is modeled through a disturbance term which represents an unobserved random variable that adds noise. The algorithm is typically formulated from the data using the least squares method which seeks to estimate the coefficients by minimizing the squared residual function. The linear equation assigns one scale factor represented by a coefficient to each covariate and an additional coefficient called the intercept or the bias coefficient which gives the line an additional degree of freedom allowing to move up and down a two-dimensional plot.
 
@@ -48,7 +48,7 @@ This project manually implements the **Gradient Descent** algorithm using variou
 
 [Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
 
-[Full Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses the entire training dataset to compute the gradients of the loss function with respect to the model parameters. The gradients are computed for all training examples simultaneously, and then the model parameters are updated accordingly. This approach provides the most accurate estimate of the gradient, as it considers all data points. However, it can be computationally expensive, especially for large datasets, because it requires processing the entire dataset in each iteration. Despite its computational cost, full batch gradient descent is guaranteed to converge to the global minimum of the loss function, assuming the learning rate is appropriately chosen and the loss function is convex.
+[Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses the entire training dataset to compute the gradients of the loss function with respect to the model parameters. The gradients are computed for all training examples simultaneously, and then the model parameters are updated accordingly. This approach provides the most accurate estimate of the gradient, as it considers all data points. However, it can be computationally expensive, especially for large datasets, because it requires processing the entire dataset in each iteration. Despite its computational cost, full batch gradient descent is guaranteed to converge to the global minimum of the loss function, assuming the learning rate is appropriately chosen and the loss function is convex.
 
 [Stochastic Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses only one randomly selected training example at each iteration to compute the gradient of the loss function. The model parameters are updated based on the gradient computed from this single example. Since this approach updates the parameters more frequently with noisy estimates of the gradient, it tends to have more frequent but noisy updates, leading to faster convergence in terms of wall-clock time compared to full batch gradient descent. However, the stochastic nature of the updates can cause oscillations in the training process, and the updates may not accurately represent the true direction of the gradient.
 
@@ -5449,9 +5449,9 @@ display(X_train.shape)
 [Normal Equations](https://www.semanticscholar.org/paper/Nouvelles-m%C3%A9thodes-pour-la-d%C3%A9termination-des-des-Legendre/21c9090e226ab449ffb608ddb2cb925911a61f24) are a system of equations whose solution is the Ordinary Least Squares (OLS) estimator of the regression coefficients and which are derived from the first-order condition of the least squares minimization problem. These equations are obtained by setting equal to zero the partial derivatives of the sum of squared errors (least squares). This approach is a closed-form solution and a one-step algorithm used to analytically find the coefficients that minimize the loss function.
 
 1. Applying normal equations, the estimated linear regression coefficients for the given data are as follows:
-    * <span style="color: #FF0000">INTERCEPT</span> = -0.00061
-    * <span style="color: #FF0000">LIFEXP</span> = +0.23342
-    * <span style="color: #FF0000">GDPCAP</span> = +0.50808
+    * <span style="color: #FF0000">INTERCEPT</span> = -0.03090
+    * <span style="color: #FF0000">LIFEXP</span> = +0.24944
+    * <span style="color: #FF0000">GDPCAP</span> = +0.51737
 2. The [linear regression model](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html) from the <mark style="background-color: #CCECFF"><b>sklearn.linear_model</b></mark> Python library API was implemented which generated the same regression coefficient estimates.
 3. These estimated coefficients will be the baseline values from which all gradient descent algorithm-derived coefficients will be compared with.
 
@@ -5619,22 +5619,61 @@ display(linear_regression_scikitlearn_computations)
 # determined using normal equations
 # as the target coefficient estimates
 ##################################
-intercept = -0.000606
-theta_1 = 0.233418
-theta_2 = 0.508083
+intercept = -0.03090
+theta_1 = 0.24944
+theta_2 = 0.51737
+theta_target = np.array([[intercept], [theta_1], [theta_2]])
 ```
+
+
+```python
+##################################
+# Setting the response variable format
+##################################
+y_train = np.array([y_train]).T
+```
+
+
+```python
+##################################
+# Defining the function for
+# computing the cost
+##################################
+def compute_cost(X, y, theta):
+    m = len(y)
+    predictions = X.dot(theta)
+    error = predictions - y
+    cost = (1 / (2 * m)) * np.sum(error ** 2)
+    return cost
+```
+
+
+```python
+##################################
+# Computing the target cost
+##################################
+costs_minimum = compute_cost(X=x_train_matrix, y=y_train, theta=theta_target)
+costs_minimum
+```
+
+
+
+
+    0.23360776606114267
+
+
 
 ### 1.6.3 Batch Gradient Descent Algorithm with Low Learning Rate <a class="anchor" id="1.6.3"></a>
 
 [Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
 
-[Full Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses the entire training dataset to compute the gradients of the loss function with respect to the model parameters. The gradients are computed for all training examples simultaneously, and then the model parameters are updated accordingly. This approach provides the most accurate estimate of the gradient, as it considers all data points. However, it can be computationally expensive, especially for large datasets, because it requires processing the entire dataset in each iteration. Despite its computational cost, full batch gradient descent is guaranteed to converge to the global minimum of the loss function, assuming the learning rate is appropriately chosen and the loss function is convex.
+[Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses the entire training dataset to compute the gradients of the loss function with respect to the model parameters. The gradients are computed for all training examples simultaneously, and then the model parameters are updated accordingly. This approach provides the most accurate estimate of the gradient, as it considers all data points. However, it can be computationally expensive, especially for large datasets, because it requires processing the entire dataset in each iteration. Despite its computational cost, full batch gradient descent is guaranteed to converge to the global minimum of the loss function, assuming the learning rate is appropriately chosen and the loss function is convex.
 
-1. The gradient descent algorithm was implemented with parameter settings described as follows:
-    * <span style="color: #FF0000">Learning Rate</span> = 1.00 (Very High)
-    * <span style="color: #FF0000">Epochs</span> = 30 (Low)
-2. The final squared loss estimate determined as 53.54705 at the 30th epoch was not optimally low as compared to those obtained using the other parameter settings.
-3. Applying the gradient descent algorithm with a very high learning rate and low epoch count, the estimated linear regression coefficients for the given data are as follows:
+1. The batch gradient descent algorithm was implemented with parameter settings described as follows:
+    * <span style="color: #FF0000">Learning Rate</span> = 0.01 (Low)
+    * <span style="color: #FF0000">Epochs</span> = 1000
+2. The final squared loss estimate determined as x.xxxxx at the 1000th epoch was not optimally low as compared to those obtained using the other parameter settings.
+3. Applying the batch gradient descent algorithm with a low learning rate, the estimated linear regression coefficients for the given data are as follows:
     * <span style="color: #FF0000">INTERCEPT</span> = +0.00801 (Baseline = -0.00061)
     * <span style="color: #FF0000">LIFEXP</span> = +0.28176 (Baseline = +0.23342)
     * <span style="color: #FF0000">GDPCAP</span> = +0.54996 (Baseline = +0.50808)
@@ -5644,132 +5683,98 @@ theta_2 = 0.508083
 
 ```python
 ##################################
-# Formulating a function
-# for computing the regression coefficients
-# using gradient descent
-##################################
-def gradient_descent(learning_rate, num_iterations, theta_initial):
-    # Setting the initialization values
-    # Initializing the coefficient estimates
-    theta = theta_initial
-    # Initializing the gradient descent trajectory path
-    theta_path = np.zeros((num_iterations+1,3))
-    theta_path[0,:]= theta_initial
-    # Initializing the loss function values
-    loss_vector = np.zeros(num_iterations)
-    ## Implementing the main Gradient Descent loop givne a fixed number of iterations
-    for i in range(num_iterations):
-        # Generating predictions
-        y_predicted = np.dot(theta.T,x_train_matrix.T)
-        # Computing for the loss function values
-        loss_vector[i] = np.sum((y_train-y_predicted)**2)
-        # Summing up the gradients across all observations and divide by the number of observations
-        gradient_vector = (y_train-y_predicted).dot(x_train_matrix)/num_observations  
-        # Updating the gradients
-        gradient_vector = gradient_vector
-        # Updating the coefficient estimates
-        theta = theta + learning_rate*gradient_vector
-        # Updating the trajectory of the gradient descent process
-        theta_path[i+1,:]=theta
-    return theta_path, loss_vector
-
-##################################
-# Formulating a function
-# for plotting the gradient descent trajectory
-# with respect to the initialized
-# and target coefficient estimates
-##################################
-target_coefficient = [intercept, theta_1, theta_2]
-target_coefficient_name = ["INTERCEPT","LIFEXP","GDPCAP"]
-def plot_ij(theta_path, i, j, ax):
-    ax.plot(target_coefficient[i], target_coefficient[j],
-            marker='p', markersize=15, label='Target Coefficient', 
-            color='#FF0000')
-    ax.plot(theta_path[:, i],theta_path[:, j],
-            color='k', linestyle='--', marker='^', 
-            markersize=5, markevery=1)
-    ax.plot(theta_path[0, i], theta_path[0, j], marker='d', 
-            markersize=10, label='Gradient Descent Path Start', color='#00FF0088')
-    ax.plot(theta_path[-1, i], theta_path[-1, j], marker='o', 
-            markersize=10, label='Gradient Descent Path End', color='#0000FF88')
-    ax.set(
-        xlabel=target_coefficient_name[i],
-        ylabel=target_coefficient_name[j])
-    ax.axis('equal')
-    ax.grid(True)
-    ax.legend(loc='upper left')
-    
-##################################
-# Consolidating all 
-# gradient descent trajectory plots
-# by pairwise combinations
-# of regression coefficients
-##################################
-def plot_all(theta_path, loss_vector, learning_rate, num_iterations, theta_initial, gdtype='Gradient Descent'):
-    fig = plt.figure(figsize=(12, 12))
-    title = '{gdtype}: Learning Rate = {lr} | Epoch Count = {iters}'
-    title = title.format(gdtype=gdtype, lr=learning_rate, 
-                         iters=num_iterations, initial=theta_initial)
-    fig.suptitle(title, fontsize=15)
-    ax = fig.add_subplot(2, 2, 1)
-    plot_ij(theta_path, 0, 1, ax)
-    ax = fig.add_subplot(2, 2, 2)
-    plot_ij(theta_path, 0, 2, ax)
-    ax = fig.add_subplot(2, 2, 3)
-    plot_ij(theta_path, 1, 2, ax)
-    ax = fig.add_subplot(2, 2, 4)
-    ax.plot(loss_vector)
-    ax.set_ylim([0, 5000])
-    ax.set_xlim([0, 300])
-    ax.set(xlabel='Iterations', ylabel='Squared Loss')
-    ax.grid(True)
+# Defining the function for implementing
+# the full batch gradient descent algorithm
+#################################
+def full_batch_gradient_descent(X, y, learning_rate, num_iterations):
+    num_samples, num_features = X.shape
+    theta = np.zeros((num_features, 1))
+    costs = []
+    theta_path = []
+    for _ in range(num_iterations):
+        gradient = (1 / num_samples) * X.T.dot(X.dot(theta) - y)
+        theta -= learning_rate * gradient
+        cost = compute_cost(X, y, theta)
+        costs.append(cost)
+        theta_path.append(theta.ravel().copy())
+    return theta, costs, np.array(theta_path)
 ```
 
 
 ```python
 ##################################
-# Setting the initial parameters
-##################################
-theta_initial = np.array([3,3,3])
-##################################
-# Using a very high learning rate
-##################################
-learning_rate = 1.00
-##################################
-# Using a low epoch count
-##################################
-num_iterations = 30
-
-##################################
-# Implementing the gradient descent process
+# Implementing the full batch gradient descent process
 # for determining the regression coefficients
+# using a low learning rate value
 ##################################
-theta_path, loss_vector = gradient_descent(learning_rate, num_iterations, theta_initial)
+theta_full, costs_full, theta_path_full = full_batch_gradient_descent(X=x_train_matrix, y=y_train, learning_rate=0.001, num_iterations=1000)
+```
 
+
+```python
 ##################################
-# Consolidating the gradient descent
-# trajectory plots in a 3D parameter space
-# for each pair of regression coefficients
+# Plotting the cost function profile
+# for the full batch gradient descent process
+# using a low learning rate value
 ##################################
-plot_all(theta_path, loss_vector, learning_rate, num_iterations, theta_initial)
+fig = plt.figure(figsize=(4.4, 5))
+plt.plot(range(len(costs_full)), costs_full)
+plt.xlabel('Epochs')
+plt.ylabel('Cost')
+plt.ylim(0.20, 0.55)
+plt.xlim(0,1000)
+plt.title('Full Batch: Learning Rate = 0.001');
 ```
 
 
     
-![png](output_176_0.png)
+![png](output_180_0.png)
     
 
 
 
 ```python
-loss_vector_vhlearningrate_lepochcount = loss_vector[-1]
-loss_vector_vhlearningrate_lepochcount
+##################################
+# Plotting the cost function profile
+# for the full batch gradient descent process
+# using a low learning rate value
+# with respect to each individual coefficient estimate
+##################################
+plt.figure(figsize=(15, 5))
+num_coeffs = x_train_matrix.shape[1]
+for i in range(num_coeffs):
+    plt.subplot(1, num_coeffs, i + 1)
+    for j in range(num_coeffs):
+        plt.plot(theta_path_full[:, i], costs_full, label='Theta {}'.format(i))
+        plt.plot(theta_target[i], costs_minimum, marker='p', markersize=15, color='#FF0000')
+        plt.plot(theta_path_full[0][i],costs_full[0], marker='d', markersize=10, color='#00FF0060')
+        plt.plot(theta_path_full[-1][i],costs_full[-1], marker='o', markersize=10, color='#0000FF60')
+    plt.ylim(0.20, 0.55)
+    plt.xlim(-0.10,0.60)
+    plt.xlabel('Theta_{}'.format(i))
+    plt.ylabel('Cost')
+    plt.title('Theta_{} Estimation'.format(i))
+```
+
+
+    
+![png](output_181_0.png)
+    
+
+
+
+```python
+##################################
+# Determining the final estimated loss
+##################################
+loss_vector_bgd_llearningrate = costs_full[-1]
+loss_vector_bgd_llearningrate
 ```
 
 
 
 
-    46.724657974933976
+    0.24303085033472172
 
 
 
@@ -5777,20 +5782,18 @@ loss_vector_vhlearningrate_lepochcount
 ```python
 ##################################
 # Consolidating the regression coefficients
-# obtained using the Gradient Descent process
-# with very high learning rate
-# and low epoch count
+# obtained using the full batch gradient descent process
+# with low learning rate
 ##################################
-linear_regression_coefficients = pd.DataFrame(["INTERCEPT","LIFEXP","GDPCAP"])
-linear_regression_vhlearningrate_lepochcount = pd.DataFrame(theta_path[-1])
-linear_regression_vhlearningrate_lepochcount_method = pd.DataFrame(["VeryHighLearningRate_LowEpochCount"]*3)
-linear_regression_gradientdescent_vhlearningrate_lepochcount = pd.concat([linear_regression_coefficients, 
-                                                                          linear_regression_vhlearningrate_lepochcount,
-                                                                          linear_regression_vhlearningrate_lepochcount_method], axis=1)
-linear_regression_gradientdescent_vhlearningrate_lepochcount.columns = ['Coefficient', 'Estimate', 'Method']
-linear_regression_gradientdescent_vhlearningrate_lepochcount.reset_index(inplace=True, drop=True)
-display(linear_regression_gradientdescent_vhlearningrate_lepochcount)
-
+linear_regression_bgd_llearningrate_coefficients = pd.DataFrame(["INTERCEPT","LIFEXP","GDPCAP"])
+linear_regression_bgd_llearningrate = pd.DataFrame(theta_path_full[-1])
+linear_regression_bgd_llearningrate_method = pd.DataFrame(["BatchGradientDescent_LowLearningRate"]*3)
+linear_regression_bgd_llearningrate_summary = pd.concat([linear_regression_bgd_llearningrate_coefficients, 
+                                                         linear_regression_bgd_llearningrate,
+                                                         linear_regression_bgd_llearningrate_method], axis=1)
+linear_regression_bgd_llearningrate_summary.columns = ['Coefficient', 'Estimate', 'Method']
+linear_regression_bgd_llearningrate_summary.reset_index(inplace=True, drop=True)
+display(linear_regression_bgd_llearningrate_summary)
 ```
 
 
@@ -5821,20 +5824,20 @@ display(linear_regression_gradientdescent_vhlearningrate_lepochcount)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.030376</td>
-      <td>VeryHighLearningRate_LowEpochCount</td>
+      <td>-0.003588</td>
+      <td>LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.255560</td>
-      <td>VeryHighLearningRate_LowEpochCount</td>
+      <td>0.305487</td>
+      <td>LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.515369</td>
-      <td>VeryHighLearningRate_LowEpochCount</td>
+      <td>0.327332</td>
+      <td>LowLearningRate</td>
     </tr>
   </tbody>
 </table>
@@ -5845,7 +5848,7 @@ display(linear_regression_gradientdescent_vhlearningrate_lepochcount)
 
 [Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
 
-[Full Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses the entire training dataset to compute the gradients of the loss function with respect to the model parameters. The gradients are computed for all training examples simultaneously, and then the model parameters are updated accordingly. This approach provides the most accurate estimate of the gradient, as it considers all data points. However, it can be computationally expensive, especially for large datasets, because it requires processing the entire dataset in each iteration. Despite its computational cost, full batch gradient descent is guaranteed to converge to the global minimum of the loss function, assuming the learning rate is appropriately chosen and the loss function is convex.
+[Batch Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) uses the entire training dataset to compute the gradients of the loss function with respect to the model parameters. The gradients are computed for all training examples simultaneously, and then the model parameters are updated accordingly. This approach provides the most accurate estimate of the gradient, as it considers all data points. However, it can be computationally expensive, especially for large datasets, because it requires processing the entire dataset in each iteration. Despite its computational cost, full batch gradient descent is guaranteed to converge to the global minimum of the loss function, assuming the learning rate is appropriately chosen and the loss function is convex.
 
 1. The gradient descent algorithm was implemented with parameter settings described as follows:
     * <span style="color: #FF0000">Learning Rate</span> = 1.00 (Very High)
@@ -5861,48 +5864,78 @@ display(linear_regression_gradientdescent_vhlearningrate_lepochcount)
 
 ```python
 ##################################
-# Setting the initial parameters
-##################################
-theta_initial = np.array([3,3,3])
-##################################
-# Using a very high learning rate
-##################################
-learning_rate = 1.00
-##################################
-# Using a high epoch count
-##################################
-num_iterations = 300
-
-##################################
-# Implementing the gradient descent process
+# Implementing the full batch gradient descent process
 # for determining the regression coefficients
+# using a high learning rate value
 ##################################
-theta_path, loss_vector = gradient_descent(learning_rate, num_iterations, theta_initial)
+theta_full, costs_full, theta_path_full = full_batch_gradient_descent(X=x_train_matrix, y=y_train, learning_rate=0.100, num_iterations=1000)
+```
 
+
+```python
 ##################################
-# Consolidating the gradient descent
-# trajectory plots in a 3D parameter space
-# for each pair of regression coefficients
+# Plotting the cost function profile
+# for the full batch gradient descent process
+# using a high learning rate value
 ##################################
-plot_all(theta_path, loss_vector, learning_rate, num_iterations, theta_initial)
+fig = plt.figure(figsize=(4.4, 5))
+plt.plot(range(len(costs_full)), costs_full)
+plt.xlabel('Epochs')
+plt.ylabel('Cost')
+plt.ylim(0.20, 0.55)
+plt.xlim(0,1000)
+plt.title('Full Batch: Learning Rate = 0.100');
 ```
 
 
     
-![png](output_180_0.png)
+![png](output_186_0.png)
     
 
 
 
 ```python
-loss_vector_vhlearningrate_hepochcount = loss_vector[-1]
-loss_vector_vhlearningrate_hepochcount
+##################################
+# Plotting the cost function profile
+# for the full batch gradient descent process
+# using a high learning rate value
+# with respect to each individual coefficient estimate
+##################################
+plt.figure(figsize=(15, 5))
+num_coeffs = x_train_matrix.shape[1]
+for i in range(num_coeffs):
+    plt.subplot(1, num_coeffs, i + 1)
+    for j in range(num_coeffs):
+        plt.plot(theta_path_full[:, i], costs_full, label='Theta {}'.format(i))
+        plt.plot(theta_target[i], costs_minimum, marker='p', markersize=15, color='#FF0000')
+        plt.plot(theta_path_full[0][i],costs_full[0], marker='d', markersize=10, color='#00FF0060')
+        plt.plot(theta_path_full[-1][i],costs_full[-1], marker='o', markersize=10, color='#0000FF60')
+    plt.ylim(0.20, 0.55)
+    plt.xlim(-0.10,0.60)
+    plt.xlabel('Theta_{}'.format(i))
+    plt.ylabel('Cost')
+    plt.title('Theta_{} Estimation'.format(i))
+```
+
+
+    
+![png](output_187_0.png)
+    
+
+
+
+```python
+##################################
+# Determining the final estimated loss
+##################################
+loss_vector_bgd_hlearningrate = costs_full[-1]
+loss_vector_bgd_hlearningrate
 ```
 
 
 
 
-    46.72155321049482
+    0.23360776605265446
 
 
 
@@ -5910,19 +5943,18 @@ loss_vector_vhlearningrate_hepochcount
 ```python
 ##################################
 # Consolidating the regression coefficients
-# obtained using the Gradient Descent process
-# with very high learning rate
-# and high epoch count
+# obtained using the full batch gradient descent process
+# with high learning rate
 ##################################
-linear_regression_coefficients = pd.DataFrame(["INTERCEPT","LIFEXP","GDPCAP"])
-linear_regression_vhlearningrate_hepochcount = pd.DataFrame(theta_path[-1])
-linear_regression_vhlearningrate_hepochcount_method = pd.DataFrame(["VeryHighLearningRate_HighEpochCount"]*3)
-linear_regression_gradientdescent_vhlearningrate_hepochcount = pd.concat([linear_regression_coefficients, 
-                                                                          linear_regression_vhlearningrate_hepochcount,
-                                                                          linear_regression_vhlearningrate_hepochcount_method], axis=1)
-linear_regression_gradientdescent_vhlearningrate_hepochcount.columns = ['Coefficient', 'Estimate', 'Method']
-linear_regression_gradientdescent_vhlearningrate_hepochcount.reset_index(inplace=True, drop=True)
-display(linear_regression_gradientdescent_vhlearningrate_hepochcount)
+linear_regression_bgd_hlearningrate_coefficients = pd.DataFrame(["INTERCEPT","LIFEXP","GDPCAP"])
+linear_regression_bgd_hlearningrate = pd.DataFrame(theta_path_full[-1])
+linear_regression_bgd_hlearningrate_method = pd.DataFrame(["BatchGradientDescent_HighLearningRate"]*3)
+linear_regression_bgd_hlearningrate_summary = pd.concat([linear_regression_bgd_hlearningrate_coefficients, 
+                                                         linear_regression_bgd_hlearningrate,
+                                                         linear_regression_bgd_hlearningrate_method], axis=1)
+linear_regression_bgd_hlearningrate_summary.columns = ['Coefficient', 'Estimate', 'Method']
+linear_regression_bgd_hlearningrate_summary.reset_index(inplace=True, drop=True)
+display(linear_regression_bgd_hlearningrate_summary)
 ```
 
 
@@ -5954,19 +5986,19 @@ display(linear_regression_gradientdescent_vhlearningrate_hepochcount)
       <th>0</th>
       <td>INTERCEPT</td>
       <td>-0.030898</td>
-      <td>VeryHighLearningRate_HighEpochCount</td>
+      <td>BatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.249436</td>
-      <td>VeryHighLearningRate_HighEpochCount</td>
+      <td>0.249438</td>
+      <td>BatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.517370</td>
-      <td>VeryHighLearningRate_HighEpochCount</td>
+      <td>0.517368</td>
+      <td>BatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
 </table>
@@ -5990,121 +6022,6 @@ display(linear_regression_gradientdescent_vhlearningrate_hepochcount)
 4. The estimated coefficients using the gradient descent algorithm with a high learning rate and low epoch count were not fully optimized and comparable with the baseline coefficients using normal equations.
 
 
-
-```python
-##################################
-# Setting the initial parameters
-##################################
-theta_initial = np.array([3,3,3])
-##################################
-# Using a high learning rate
-##################################
-learning_rate = 0.1
-##################################
-# Using a low epoch count
-##################################
-num_iterations = 30
-
-##################################
-# Implementing the gradient descent process
-# for determining the regression coefficients
-##################################
-theta_path, loss_vector = gradient_descent(learning_rate, num_iterations, theta_initial)
-
-##################################
-# Consolidating the gradient descent
-# trajectory plots in a 3D parameter space
-# for each pair of regression coefficients
-##################################
-plot_all(theta_path, loss_vector, learning_rate, num_iterations, theta_initial)
-```
-
-
-    
-![png](output_184_0.png)
-    
-
-
-
-```python
-loss_vector_hlearningrate_lepochcount = loss_vector[-1]
-loss_vector_hlearningrate_lepochcount
-```
-
-
-
-
-    48.60570014809525
-
-
-
-
-```python
-##################################
-# Consolidating the regression coefficients
-# obtained using the Gradient Descent process
-# with high learning rate
-# and low epoch count
-##################################
-linear_regression_coefficients = pd.DataFrame(["INTERCEPT","LIFEXP","GDPCAP"])
-linear_regression_hlearningrate_lepochcount = pd.DataFrame(theta_path[-1])
-linear_regression_hlearningrate_lepochcount_method = pd.DataFrame(["HighLearningRate_LowEpochCount"]*3)
-linear_regression_gradientdescent_hlearningrate_lepochcount = pd.concat([linear_regression_coefficients, 
-                                                                         linear_regression_hlearningrate_lepochcount,
-                                                                         linear_regression_hlearningrate_lepochcount_method], axis=1)
-linear_regression_gradientdescent_hlearningrate_lepochcount.columns = ['Coefficient', 'Estimate', 'Method']
-linear_regression_gradientdescent_hlearningrate_lepochcount.reset_index(inplace=True, drop=True)
-display(linear_regression_gradientdescent_hlearningrate_lepochcount)
-```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Coefficient</th>
-      <th>Estimate</th>
-      <th>Method</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>INTERCEPT</td>
-      <td>0.086883</td>
-      <td>HighLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>LIFEXP</td>
-      <td>0.357444</td>
-      <td>HighLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>GDPCAP</td>
-      <td>0.403003</td>
-      <td>HighLearningRate_LowEpochCount</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 ### 1.6.6 Stochastic Gradient Descent Algorithm with High Learning Rate <a class="anchor" id="1.6.6"></a>
 
 [Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
@@ -6120,121 +6037,6 @@ display(linear_regression_gradientdescent_hlearningrate_lepochcount)
     * <span style="color: #FF0000">LIFEXP</span> = +0.23703 (Baseline = +0.23342)
     * <span style="color: #FF0000">GDPCAP</span> = +0.50442 (Baseline = +0.50808)
 4. The estimated coefficients using the gradient descent algorithm with a high learning rate and high epoch count, while not fully optimized, were sufficiently comparable with the baseline coefficients using normal equations.
-
-
-
-```python
-##################################
-# Setting the initial parameters
-##################################
-theta_initial = np.array([3,3,3])
-##################################
-# Using a high learning rate
-##################################
-learning_rate = 0.1
-##################################
-# Using a high epoch count
-##################################
-num_iterations = 300
-
-##################################
-# Implementing the gradient descent process
-# for determining the regression coefficients
-##################################
-theta_path, loss_vector = gradient_descent(learning_rate, num_iterations, theta_initial)
-
-##################################
-# Consolidating the gradient descent
-# trajectory plots in a 3D parameter space
-# for each pair of regression coefficients
-##################################
-plot_all(theta_path, loss_vector, learning_rate, num_iterations, theta_initial)
-```
-
-
-    
-![png](output_188_0.png)
-    
-
-
-
-```python
-loss_vector_hlearningrate_hepochcount = loss_vector[-1]
-loss_vector_hlearningrate_hepochcount
-```
-
-
-
-
-    46.72212666029538
-
-
-
-
-```python
-##################################
-# Consolidating the regression coefficients
-# obtained using the Gradient Descent process
-# with high learning rate
-# and high epoch count
-##################################
-linear_regression_coefficients = pd.DataFrame(["INTERCEPT","LIFEXP","GDPCAP"])
-linear_regression_hlearningrate_hepochcount = pd.DataFrame(theta_path[-1])
-linear_regression_hlearningrate_hepochcount_method = pd.DataFrame(["HighLearningRate_HighEpochCount"]*3)
-linear_regression_gradientdescent_hlearningrate_hepochcount = pd.concat([linear_regression_coefficients, 
-                                                                         linear_regression_hlearningrate_hepochcount,
-                                                                         linear_regression_hlearningrate_hepochcount_method], axis=1)
-linear_regression_gradientdescent_hlearningrate_hepochcount.columns = ['Coefficient', 'Estimate', 'Method']
-linear_regression_gradientdescent_hlearningrate_hepochcount.reset_index(inplace=True, drop=True)
-display(linear_regression_gradientdescent_hlearningrate_hepochcount)
-```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Coefficient</th>
-      <th>Estimate</th>
-      <th>Method</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>INTERCEPT</td>
-      <td>-0.030696</td>
-      <td>HighLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>LIFEXP</td>
-      <td>0.254291</td>
-      <td>HighLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>GDPCAP</td>
-      <td>0.512383</td>
-      <td>HighLearningRate_HighEpochCount</td>
-    </tr>
-  </tbody>
-</table>
-</div>
 
 
 ### 1.6.7 Mini-Batch Gradient Descent Algorithm with Low Learning Rate <a class="anchor" id="1.6.7"></a>
@@ -6254,121 +6056,6 @@ display(linear_regression_gradientdescent_hlearningrate_hepochcount)
 4. The estimated coefficients using the gradient descent algorithm with a low learning rate and low epoch count were not fully optimized and comparable with the baseline coefficients using normal equations.
 
 
-
-```python
-##################################
-# Setting the initial parameters
-##################################
-theta_initial = np.array([3,3,3])
-##################################
-# Using a low learning rate
-##################################
-learning_rate = 0.01
-##################################
-# Using a low epoch count
-##################################
-num_iterations = 30
-
-##################################
-# Implementing the gradient descent process
-# for determining the regression coefficients
-##################################
-theta_path, loss_vector = gradient_descent(learning_rate, num_iterations, theta_initial)
-
-##################################
-# Consolidating the gradient descent
-# trajectory plots in a 3D parameter space
-# for each pair of regression coefficients
-##################################
-plot_all(theta_path, loss_vector, learning_rate, num_iterations, theta_initial)
-```
-
-
-    
-![png](output_192_0.png)
-    
-
-
-
-```python
-loss_vector_llearningrate_lepochcount = loss_vector[-1]
-loss_vector_llearningrate_lepochcount
-```
-
-
-
-
-    1435.4907039400766
-
-
-
-
-```python
-##################################
-# Consolidating the regression coefficients
-# obtained using the Gradient Descent process
-# with low learning rate
-# and low epoch count
-##################################
-linear_regression_coefficients = pd.DataFrame(["INTERCEPT","LIFEXP","GDPCAP"])
-linear_regression_llearningrate_lepochcount = pd.DataFrame(theta_path[-1])
-linear_regression_llearningrate_lepochcount_method = pd.DataFrame(["LowLearningRate_LowEpochCount"]*3)
-linear_regression_gradientdescent_llearningrate_lepochcount = pd.concat([linear_regression_coefficients, 
-                                                                         linear_regression_llearningrate_lepochcount,
-                                                                         linear_regression_llearningrate_lepochcount_method], axis=1)
-linear_regression_gradientdescent_llearningrate_lepochcount.columns = ['Coefficient', 'Estimate', 'Method']
-linear_regression_gradientdescent_llearningrate_lepochcount.reset_index(inplace=True, drop=True)
-display(linear_regression_gradientdescent_llearningrate_lepochcount)
-```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Coefficient</th>
-      <th>Estimate</th>
-      <th>Method</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>INTERCEPT</td>
-      <td>2.143519</td>
-      <td>LowLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>LIFEXP</td>
-      <td>1.868917</td>
-      <td>LowLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>GDPCAP</td>
-      <td>1.875042</td>
-      <td>LowLearningRate_LowEpochCount</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 ### 1.6.8 Mini-Batch Gradient Descent Algorithm with High Learning Rate <a class="anchor" id="1.6.8"></a>
 
 [Gradient Descent](https://link.springer.com/book/10.1007/978-1-4757-3462-1) minimizes the loss function parameterized by the model’s coefficients based on the direction and learning rate factors which determine the partial derivative calculations of future iterations, allowing the algorithm to gradually arrive at the local or global minimum considered the point of convergence. 
@@ -6386,406 +6073,12 @@ display(linear_regression_gradientdescent_llearningrate_lepochcount)
 4. The estimated coefficients using the gradient descent algorithm with a low learning rate and high epoch count were not fully optimized and comparable with the baseline coefficients using normal equations.
 
 
-
-```python
-##################################
-# Setting the initial parameters
-##################################
-theta_initial = np.array([3,3,3])
-##################################
-# Using a low learning rate
-##################################
-learning_rate = 0.01
-##################################
-# Using a high epoch count
-##################################
-num_iterations = 300
-
-##################################
-# Implementing the gradient descent process
-# for determining the regression coefficients
-##################################
-theta_path, loss_vector = gradient_descent(learning_rate, num_iterations, theta_initial)
-
-##################################
-# Consolidating the gradient descent
-# trajectory plots in a 3D parameter space
-# for each pair of regression coefficients
-##################################
-plot_all(theta_path, loss_vector, learning_rate, num_iterations, theta_initial)
-```
-
-
-    
-![png](output_196_0.png)
-    
-
-
-
-```python
-loss_vector_llearningrate_hepochcount = loss_vector[-1]
-loss_vector_llearningrate_hepochcount
-```
-
-
-
-
-    48.78586259037199
-
-
-
-
-```python
-##################################
-# Consolidating the regression coefficients
-# obtained using the Gradient Descent process
-# with low learning rate
-# and high epoch count
-##################################
-linear_regression_coefficients = pd.DataFrame(["INTERCEPT","LIFEXP","GDPCAP"])
-linear_regression_llearningrate_hepochcount = pd.DataFrame(theta_path[-1])
-linear_regression_llearningrate_hepochcount_method = pd.DataFrame(["LowLearningRate_HighEpochCount"]*3)
-linear_regression_gradientdescent_llearningrate_hepochcount = pd.concat([linear_regression_coefficients, 
-                                                                         linear_regression_llearningrate_hepochcount,
-                                                                         linear_regression_llearningrate_hepochcount_method], axis=1)
-linear_regression_gradientdescent_llearningrate_hepochcount.columns = ['Coefficient', 'Estimate', 'Method']
-linear_regression_gradientdescent_llearningrate_hepochcount.reset_index(inplace=True, drop=True)
-display(linear_regression_gradientdescent_llearningrate_hepochcount)
-```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Coefficient</th>
-      <th>Estimate</th>
-      <th>Method</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>INTERCEPT</td>
-      <td>0.104862</td>
-      <td>LowLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>LIFEXP</td>
-      <td>0.360852</td>
-      <td>LowLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>GDPCAP</td>
-      <td>0.406642</td>
-      <td>LowLearningRate_HighEpochCount</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
 ## 1.7. Consolidated Findings <a class="anchor" id="1.7"></a>
 
 1. The gradient descent parameter setting which estimated sufficiently comparable coefficients with the baseline values are as follows:
     * <span style="color: #FF0000">VHLR_HEC</span> = Very High Learning Rate (1.0) and High Epoch Count (300)
     * <span style="color: #FF0000">HLR_HEC</span> = High Learning Rate (0.1) and High Epoch Count (300)
 2. The choice of **Learning Rate** and **Epoch Count** in the implementation of the gradient descent algorithm are critical to achieving fully optimized coefficients while maintaining minimal squared loss estimates.
-
-
-
-```python
-##################################
-# Consolidating the regression coefficients
-# obtained using all estimation methods
-##################################
-linear_regression_methods = pd.concat([linear_regression_scikitlearn_computations, 
-                                       linear_regression_gradientdescent_vhlearningrate_lepochcount,
-                                       linear_regression_gradientdescent_vhlearningrate_hepochcount,
-                                       linear_regression_gradientdescent_hlearningrate_lepochcount,
-                                       linear_regression_gradientdescent_hlearningrate_hepochcount,
-                                       linear_regression_gradientdescent_llearningrate_lepochcount,
-                                       linear_regression_gradientdescent_llearningrate_hepochcount], axis=0)
-linear_regression_methods.reset_index(inplace=True, drop=True)
-display(linear_regression_methods)
-```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Coefficient</th>
-      <th>Estimate</th>
-      <th>Method</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>INTERCEPT</td>
-      <td>-0.030898</td>
-      <td>Normal_Equations</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>LIFEXP</td>
-      <td>0.249436</td>
-      <td>Normal_Equations</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>GDPCAP</td>
-      <td>0.517370</td>
-      <td>Normal_Equations</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>INTERCEPT</td>
-      <td>-0.030376</td>
-      <td>VeryHighLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>LIFEXP</td>
-      <td>0.255560</td>
-      <td>VeryHighLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>GDPCAP</td>
-      <td>0.515369</td>
-      <td>VeryHighLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>INTERCEPT</td>
-      <td>-0.030898</td>
-      <td>VeryHighLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>LIFEXP</td>
-      <td>0.249436</td>
-      <td>VeryHighLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>GDPCAP</td>
-      <td>0.517370</td>
-      <td>VeryHighLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>INTERCEPT</td>
-      <td>0.086883</td>
-      <td>HighLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>LIFEXP</td>
-      <td>0.357444</td>
-      <td>HighLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>GDPCAP</td>
-      <td>0.403003</td>
-      <td>HighLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>INTERCEPT</td>
-      <td>-0.030696</td>
-      <td>HighLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>LIFEXP</td>
-      <td>0.254291</td>
-      <td>HighLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>GDPCAP</td>
-      <td>0.512383</td>
-      <td>HighLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>INTERCEPT</td>
-      <td>2.143519</td>
-      <td>LowLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>LIFEXP</td>
-      <td>1.868917</td>
-      <td>LowLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>GDPCAP</td>
-      <td>1.875042</td>
-      <td>LowLearningRate_LowEpochCount</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>INTERCEPT</td>
-      <td>0.104862</td>
-      <td>LowLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>LIFEXP</td>
-      <td>0.360852</td>
-      <td>LowLearningRate_HighEpochCount</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>GDPCAP</td>
-      <td>0.406642</td>
-      <td>LowLearningRate_HighEpochCount</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-```python
-consolidated_ne = linear_regression_methods[linear_regression_methods['Method']=='Normal_Equations'].loc[:,"Estimate"]
-consolidated_vhlr_lec = linear_regression_methods[linear_regression_methods['Method']=='VeryHighLearningRate_LowEpochCount'].loc[:,"Estimate"]
-consolidated_vhlr_hec = linear_regression_methods[linear_regression_methods['Method']=='VeryHighLearningRate_HighEpochCount'].loc[:,"Estimate"]
-consolidated_hlr_lec = linear_regression_methods[linear_regression_methods['Method']=='HighLearningRate_LowEpochCount'].loc[:,"Estimate"]
-consolidated_hlr_hec = linear_regression_methods[linear_regression_methods['Method']=='HighLearningRate_HighEpochCount'].loc[:,"Estimate"]
-consolidated_llr_lec = linear_regression_methods[linear_regression_methods['Method']=='LowLearningRate_LowEpochCount'].loc[:,"Estimate"]
-consolidated_llr_hec = linear_regression_methods[linear_regression_methods['Method']=='LowLearningRate_HighEpochCount'].loc[:,"Estimate"]
-linear_regression_methods_plot = pd.DataFrame({'NE': consolidated_ne.values,
-                                               'VHLR_LEC': consolidated_vhlr_lec.values,
-                                               'VHLR_HEC': consolidated_vhlr_hec.values,
-                                               'HLR_LEC': consolidated_hlr_lec.values,
-                                               'HLR_HEC': consolidated_hlr_hec.values,
-                                               'LLR_LEC': consolidated_llr_lec.values,
-                                               'LLR_HEC': consolidated_llr_hec.values},
-                                              linear_regression_methods['Coefficient'].unique())
-linear_regression_methods_plot
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>NE</th>
-      <th>VHLR_LEC</th>
-      <th>VHLR_HEC</th>
-      <th>HLR_LEC</th>
-      <th>HLR_HEC</th>
-      <th>LLR_LEC</th>
-      <th>LLR_HEC</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>INTERCEPT</th>
-      <td>-0.030898</td>
-      <td>-0.030376</td>
-      <td>-0.030898</td>
-      <td>0.086883</td>
-      <td>-0.030696</td>
-      <td>2.143519</td>
-      <td>0.104862</td>
-    </tr>
-    <tr>
-      <th>LIFEXP</th>
-      <td>0.249436</td>
-      <td>0.255560</td>
-      <td>0.249436</td>
-      <td>0.357444</td>
-      <td>0.254291</td>
-      <td>1.868917</td>
-      <td>0.360852</td>
-    </tr>
-    <tr>
-      <th>GDPCAP</th>
-      <td>0.517370</td>
-      <td>0.515369</td>
-      <td>0.517370</td>
-      <td>0.403003</td>
-      <td>0.512383</td>
-      <td>1.875042</td>
-      <td>0.406642</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
-```python
-linear_regression_coefficent_estimation_methods_plot = linear_regression_methods_plot.plot.barh(figsize=(10, 6),width=0.90)
-linear_regression_coefficent_estimation_methods_plot.set_xlim(-0.5,3)
-linear_regression_coefficent_estimation_methods_plot.set_title("Linear Regression Coefficient Comparison by Estimation Method")
-linear_regression_coefficent_estimation_methods_plot.set_xlabel("Linear Regression Coefficient Estimates")
-linear_regression_coefficent_estimation_methods_plot.set_ylabel("Linear Regression Coefficients")
-linear_regression_coefficent_estimation_methods_plot.grid(False)
-linear_regression_coefficent_estimation_methods_plot.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
-for container in linear_regression_coefficent_estimation_methods_plot.containers:
-    linear_regression_coefficent_estimation_methods_plot.bar_label(container, fmt='%.5f', padding=5, color='black')
-```
-
-
-    
-![png](output_202_0.png)
-    
 
 
 # 2. Summary <a class="anchor" id="Summary"></a>
