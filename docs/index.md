@@ -6127,7 +6127,7 @@ loss_vector_sgd_llearningrate
 
 
 
-    0.2416227708297828
+    0.2408007257287602
 
 
 
@@ -6178,19 +6178,19 @@ display(linear_regression_sgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.015465</td>
+      <td>-0.014627</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.316440</td>
+      <td>0.314109</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.334472</td>
+      <td>0.338419</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -6292,7 +6292,7 @@ loss_vector_sgd_hlearningrate
 
 
 
-    0.3410083587072063
+    0.24718123058927668
 
 
 
@@ -6343,19 +6343,19 @@ display(linear_regression_sgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.046194</td>
+      <td>0.128627</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.124065</td>
+      <td>0.357930</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.152346</td>
+      <td>0.392653</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6532,19 +6532,19 @@ display(linear_regression_mbgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.046194</td>
+      <td>0.128627</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.124065</td>
+      <td>0.357930</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.152346</td>
+      <td>0.392653</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -6697,19 +6697,19 @@ display(linear_regression_mbgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.046194</td>
+      <td>0.128627</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.124065</td>
+      <td>0.357930</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.152346</td>
+      <td>0.392653</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6823,73 +6823,73 @@ display(linear_regression_methods)
     <tr>
       <th>9</th>
       <td>INTERCEPT</td>
-      <td>0.015465</td>
+      <td>-0.014627</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>10</th>
       <td>LIFEXP</td>
-      <td>0.316440</td>
+      <td>0.314109</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>11</th>
       <td>GDPCAP</td>
-      <td>0.334472</td>
+      <td>0.338419</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>12</th>
       <td>INTERCEPT</td>
-      <td>0.046194</td>
+      <td>0.128627</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>13</th>
       <td>LIFEXP</td>
-      <td>0.124065</td>
+      <td>0.357930</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>14</th>
       <td>GDPCAP</td>
-      <td>0.152346</td>
+      <td>0.392653</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>15</th>
       <td>INTERCEPT</td>
-      <td>0.046194</td>
+      <td>0.128627</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>16</th>
       <td>LIFEXP</td>
-      <td>0.124065</td>
+      <td>0.357930</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>17</th>
       <td>GDPCAP</td>
-      <td>0.152346</td>
+      <td>0.392653</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>18</th>
       <td>INTERCEPT</td>
-      <td>0.046194</td>
+      <td>0.128627</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>19</th>
       <td>LIFEXP</td>
-      <td>0.124065</td>
+      <td>0.357930</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>20</th>
       <td>GDPCAP</td>
-      <td>0.152346</td>
+      <td>0.392653</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6953,30 +6953,30 @@ linear_regression_methods_plot
       <td>-0.030898</td>
       <td>-0.003588</td>
       <td>-0.030898</td>
-      <td>0.015465</td>
-      <td>0.046194</td>
-      <td>0.046194</td>
-      <td>0.046194</td>
+      <td>-0.014627</td>
+      <td>0.128627</td>
+      <td>0.128627</td>
+      <td>0.128627</td>
     </tr>
     <tr>
       <th>LIFEXP</th>
       <td>0.249436</td>
       <td>0.305487</td>
       <td>0.249438</td>
-      <td>0.316440</td>
-      <td>0.124065</td>
-      <td>0.124065</td>
-      <td>0.124065</td>
+      <td>0.314109</td>
+      <td>0.357930</td>
+      <td>0.357930</td>
+      <td>0.357930</td>
     </tr>
     <tr>
       <th>GDPCAP</th>
       <td>0.517370</td>
       <td>0.327332</td>
       <td>0.517368</td>
-      <td>0.334472</td>
-      <td>0.152346</td>
-      <td>0.152346</td>
-      <td>0.152346</td>
+      <td>0.338419</td>
+      <td>0.392653</td>
+      <td>0.392653</td>
+      <td>0.392653</td>
     </tr>
   </tbody>
 </table>
@@ -7010,6 +7010,8 @@ for container in linear_regression_coefficent_estimation_methods_plot.containers
 
 # 3. References <a class="anchor" id="References"></a>
 
+* **[Book]** [Deep Learning: A Visual Approach](https://nostarch.com/deep-learning-visual-approach) by Andrew Glassner
+* **[Book]** [Deep Learning with Python](https://www.manning.com/books/deep-learning-with-python-second-edition) by François Chollet
 * **[Book]** [Data Preparation for Machine Learning: Data Cleaning, Feature Selection, and Data Transforms in Python](https://machinelearningmastery.com/data-preparation-for-machine-learning/) by Jason Brownlee (Machine Learning Mastery)
 * **[Book]** [Feature Engineering and Selection: A Practical Approach for Predictive Models](http://www.feat.engineering/) by Max Kuhn and Kjell Johnson
 * **[Book]** [Feature Engineering for Machine Learning](https://www.oreilly.com/library/view/feature-engineering-for/9781491953235/) by Alice Zheng and Amanda Casari
@@ -7109,6 +7111,7 @@ for container in linear_regression_coefficent_estimation_methods_plot.containers
 * **[Course]** [IBM Data Analyst Professional Certificate](https://www.coursera.org/professional-certificates/ibm-data-analyst) by IBM Team (Coursera)
 * **[Course]** [IBM Data Science Professional Certificate](https://www.coursera.org/professional-certificates/ibm-data-science) by IBM Team (Coursera)
 * **[Course]** [IBM Machine Learning Professional Certificate](https://www.coursera.org/professional-certificates/ibm-machine-learning) by IBM Team (Coursera)
+* **[Course]** [Machine Learning Specialization Certificate](https://www.coursera.org/specializations/machine-learning-introduction) by DeepLearning.AI Team (Coursera)
 
 ***
 
