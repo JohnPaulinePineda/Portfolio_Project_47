@@ -2,7 +2,7 @@
 # Supervised Learning : Comparing Batch, Stochastic and Mini-Batch Approaches to Gradient Descent in Estimating Regression Coefficients
 
 ***
-### John Pauline Pineda <br> <br> *March 9, 2024*
+### [**John Pauline Pineda**](https://github.com/JohnPaulinePineda) <br> <br> *March 9, 2024*
 ***
 
 * [**1. Table of Contents**](#TOC)
@@ -142,6 +142,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import itertools
+import os
 %matplotlib inline
 
 from operator import add,mul,truediv
@@ -161,9 +162,18 @@ from sklearn.pipeline import Pipeline
 
 ```python
 ##################################
-# Loading the dataset
+# Defining file paths
 ##################################
-cancer_rate = pd.read_csv('NumericCancerRates.csv')
+DATASETS_ORIGINAL_PATH = r"datasets\original"
+```
+
+
+```python
+##################################
+# Loading the dataset
+# from the DATASETS_ORIGINAL_PATH
+##################################
+cancer_rate = pd.read_csv(os.path.join("..", DATASETS_ORIGINAL_PATH, "NumericCancerRates.csv"))
 ```
 
 
@@ -837,7 +847,7 @@ cancer_rate.duplicated().sum()
 
 
 
-    0
+    np.int64(0)
 
 
 
@@ -1231,15 +1241,6 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.864407</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>GDPPER</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>165</td>
-      <td>12</td>
-      <td>0.932203</td>
-    </tr>
-    <tr>
       <th>21</th>
       <td>EPISCO</td>
       <td>float64</td>
@@ -1249,13 +1250,13 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.932203</td>
     </tr>
     <tr>
-      <th>20</th>
-      <td>HDICAT</td>
-      <td>category</td>
+      <th>2</th>
+      <td>GDPPER</td>
+      <td>float64</td>
       <td>177</td>
-      <td>167</td>
-      <td>10</td>
-      <td>0.943503</td>
+      <td>165</td>
+      <td>12</td>
+      <td>0.932203</td>
     </tr>
     <tr>
       <th>16</th>
@@ -1267,8 +1268,17 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.943503</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td>DTHCMD</td>
+      <th>20</th>
+      <td>HDICAT</td>
+      <td>category</td>
+      <td>177</td>
+      <td>167</td>
+      <td>10</td>
+      <td>0.943503</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>CO2EMI</td>
       <td>float64</td>
       <td>177</td>
       <td>170</td>
@@ -1285,8 +1295,17 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.960452</td>
     </tr>
     <tr>
-      <th>15</th>
-      <td>CO2EMI</td>
+      <th>11</th>
+      <td>GHGEMI</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>170</td>
+      <td>7</td>
+      <td>0.960452</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>DTHCMD</td>
       <td>float64</td>
       <td>177</td>
       <td>170</td>
@@ -1303,15 +1322,6 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.960452</td>
     </tr>
     <tr>
-      <th>11</th>
-      <td>GHGEMI</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>170</td>
-      <td>7</td>
-      <td>0.960452</td>
-    </tr>
-    <tr>
       <th>14</th>
       <td>FORARE</td>
       <td>float64</td>
@@ -1321,35 +1331,8 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.977401</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>TUBINC</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>174</td>
-      <td>3</td>
-      <td>0.983051</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>AGRLND</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>174</td>
-      <td>3</td>
-      <td>0.983051</td>
-    </tr>
-    <tr>
       <th>6</th>
       <td>POPGRO</td>
-      <td>float64</td>
-      <td>177</td>
-      <td>174</td>
-      <td>3</td>
-      <td>0.983051</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>POPDEN</td>
       <td>float64</td>
       <td>177</td>
       <td>174</td>
@@ -1366,8 +1349,35 @@ display(all_column_quality_summary[(all_column_quality_summary['Fill.Rate']<1)].
       <td>0.983051</td>
     </tr>
     <tr>
+      <th>17</th>
+      <td>POPDEN</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>AGRLND</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
       <th>7</th>
       <td>LIFEXP</td>
+      <td>float64</td>
+      <td>177</td>
+      <td>174</td>
+      <td>3</td>
+      <td>0.983051</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>TUBINC</td>
       <td>float64</td>
       <td>177</td>
       <td>174</td>
@@ -1679,13 +1689,6 @@ display(all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.20)].
       <td>0.272727</td>
     </tr>
     <tr>
-      <th>132</th>
-      <td>Somalia</td>
-      <td>22</td>
-      <td>6</td>
-      <td>0.272727</td>
-    </tr>
-    <tr>
       <th>168</th>
       <td>South Sudan</td>
       <td>22</td>
@@ -1693,15 +1696,22 @@ display(all_row_quality_summary[(all_row_quality_summary['Missing.Rate']>0.20)].
       <td>0.272727</td>
     </tr>
     <tr>
-      <th>73</th>
-      <td>Venezuela</td>
+      <th>132</th>
+      <td>Somalia</td>
+      <td>22</td>
+      <td>6</td>
+      <td>0.272727</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>Libya</td>
       <td>22</td>
       <td>5</td>
       <td>0.227273</td>
     </tr>
     <tr>
-      <th>117</th>
-      <td>Libya</td>
+      <th>73</th>
+      <td>Venezuela</td>
       <td>22</td>
       <td>5</td>
       <td>0.227273</td>
@@ -1934,7 +1944,7 @@ display(numeric_column_quality_summary)
       <td>155.300000</td>
       <td>4.524000e+02</td>
       <td>135.300000</td>
-      <td>106.700000</td>
+      <td>130.600000</td>
       <td>3</td>
       <td>2</td>
       <td>1.500000</td>
@@ -1952,7 +1962,7 @@ display(numeric_column_quality_summary)
       <td>34024.900890</td>
       <td>2.346469e+05</td>
       <td>98380.636010</td>
-      <td>42154.178100</td>
+      <td>77541.764380</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -1970,7 +1980,7 @@ display(numeric_column_quality_summary)
       <td>61.701500</td>
       <td>1.000000e+02</td>
       <td>100.000000</td>
-      <td>52.516000</td>
+      <td>86.699000</td>
       <td>2</td>
       <td>1</td>
       <td>2.000000</td>
@@ -2006,7 +2016,7 @@ display(numeric_column_quality_summary)
       <td>0.873660</td>
       <td>5.354510e+00</td>
       <td>1.232440</td>
-      <td>0.962180</td>
+      <td>3.422870</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2024,7 +2034,7 @@ display(numeric_column_quality_summary)
       <td>1.179959</td>
       <td>3.727101e+00</td>
       <td>1.235701</td>
-      <td>1.483129</td>
+      <td>2.204789</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2042,7 +2052,7 @@ display(numeric_column_quality_summary)
       <td>72.464610</td>
       <td>8.456000e+01</td>
       <td>83.200000</td>
-      <td>68.687000</td>
+      <td>82.256098</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2060,7 +2070,7 @@ display(numeric_column_quality_summary)
       <td>44.500000</td>
       <td>5.920000e+02</td>
       <td>12.000000</td>
-      <td>7.200000</td>
+      <td>4.100000</td>
       <td>4</td>
       <td>3</td>
       <td>1.333333</td>
@@ -2078,7 +2088,7 @@ display(numeric_column_quality_summary)
       <td>12.456279</td>
       <td>6.520789e+01</td>
       <td>4.941054</td>
-      <td>42.079403</td>
+      <td>4.354730</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2096,7 +2106,7 @@ display(numeric_column_quality_summary)
       <td>40.386649</td>
       <td>8.084112e+01</td>
       <td>46.252480</td>
-      <td>72.006469</td>
+      <td>38.562911</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2114,7 +2124,7 @@ display(numeric_column_quality_summary)
       <td>41009.275980</td>
       <td>1.294287e+07</td>
       <td>571903.119900</td>
-      <td>3000.932259</td>
+      <td>80158.025830</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2132,7 +2142,7 @@ display(numeric_column_quality_summary)
       <td>32.381668</td>
       <td>1.000000e+02</td>
       <td>100.000000</td>
-      <td>13.637841</td>
+      <td>80.081439</td>
       <td>3</td>
       <td>1</td>
       <td>3.000000</td>
@@ -2150,7 +2160,7 @@ display(numeric_column_quality_summary)
       <td>11118.976025</td>
       <td>1.186285e+06</td>
       <td>131484.763200</td>
-      <td>1326.034028</td>
+      <td>32241.937000</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2168,7 +2178,7 @@ display(numeric_column_quality_summary)
       <td>31.509048</td>
       <td>9.741212e+01</td>
       <td>17.421315</td>
-      <td>8.782159</td>
+      <td>37.570126</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2186,7 +2196,7 @@ display(numeric_column_quality_summary)
       <td>2.298368</td>
       <td>3.172684e+01</td>
       <td>14.772658</td>
-      <td>0.972088</td>
+      <td>6.160799</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2222,7 +2232,7 @@ display(numeric_column_quality_summary)
       <td>77.983133</td>
       <td>7.918951e+03</td>
       <td>3.335312</td>
-      <td>13.300785</td>
+      <td>19.331586</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2240,7 +2250,7 @@ display(numeric_column_quality_summary)
       <td>53.392460</td>
       <td>1.433107e+02</td>
       <td>110.139221</td>
-      <td>45.220661</td>
+      <td>75.734833</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2258,7 +2268,7 @@ display(numeric_column_quality_summary)
       <td>5348.192875</td>
       <td>1.173705e+05</td>
       <td>51722.069000</td>
-      <td>3961.726633</td>
+      <td>41760.594780</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2462,7 +2472,7 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
       <td>77.983133</td>
       <td>7.918951e+03</td>
       <td>3.335312</td>
-      <td>13.300785</td>
+      <td>19.331586</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2480,7 +2490,7 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
       <td>41009.275980</td>
       <td>1.294287e+07</td>
       <td>571903.119900</td>
-      <td>3000.932259</td>
+      <td>80158.025830</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2516,7 +2526,7 @@ display(numeric_column_quality_summary[(numeric_column_quality_summary['Skewness
       <td>11118.976025</td>
       <td>1.186285e+06</td>
       <td>131484.763200</td>
-      <td>1326.034028</td>
+      <td>32241.937000</td>
       <td>1</td>
       <td>1</td>
       <td>1.000000</td>
@@ -2688,7 +2698,7 @@ display(object_column_quality_summary)
       <th>0</th>
       <td>COUNTRY</td>
       <td>Australia</td>
-      <td>Mauritius</td>
+      <td>New Zealand</td>
       <td>1</td>
       <td>1</td>
       <td>1.0</td>
@@ -3630,7 +3640,7 @@ cancer_rate_cleaned_categorical = cancer_rate_cleaned.select_dtypes(include='cat
 # for categorical columns with
 # the most frequent category
 ##################################
-cancer_rate_cleaned_categorical['HDICAT'].fillna(cancer_rate_cleaned_categorical['HDICAT'].mode()[0], inplace=True)
+cancer_rate_cleaned_categorical['HDICAT'] = cancer_rate_cleaned_categorical['HDICAT'].fillna(cancer_rate_cleaned_categorical['HDICAT'].mode()[0])
 cancer_rate_imputed_categorical = cancer_rate_cleaned_categorical.reset_index(drop=True)
 ```
 
@@ -4165,97 +4175,97 @@ for column in cancer_rate_imputed_numeric:
 
 
     
-![png](output_121_0.png)
+![png](output_122_0.png)
     
 
 
 
     
-![png](output_121_1.png)
+![png](output_122_1.png)
     
 
 
 
     
-![png](output_121_2.png)
+![png](output_122_2.png)
     
 
 
 
     
-![png](output_121_3.png)
+![png](output_122_3.png)
     
 
 
 
     
-![png](output_121_4.png)
+![png](output_122_4.png)
     
 
 
 
     
-![png](output_121_5.png)
+![png](output_122_5.png)
     
 
 
 
     
-![png](output_121_6.png)
+![png](output_122_6.png)
     
 
 
 
     
-![png](output_121_7.png)
+![png](output_122_7.png)
     
 
 
 
     
-![png](output_121_8.png)
+![png](output_122_8.png)
     
 
 
 
     
-![png](output_121_9.png)
+![png](output_122_9.png)
     
 
 
 
     
-![png](output_121_10.png)
+![png](output_122_10.png)
     
 
 
 
     
-![png](output_121_11.png)
+![png](output_122_11.png)
     
 
 
 
     
-![png](output_121_12.png)
+![png](output_122_12.png)
     
 
 
 
     
-![png](output_121_13.png)
+![png](output_122_13.png)
     
 
 
 
     
-![png](output_121_14.png)
+![png](output_122_14.png)
     
 
 
 
     
-![png](output_121_15.png)
+![png](output_122_15.png)
     
 
 
@@ -4487,7 +4497,7 @@ plt.show()
 
 
     
-![png](output_126_0.png)
+![png](output_127_0.png)
     
 
 
@@ -4524,7 +4534,7 @@ plot_correlation_matrix(cancer_rate_imputed_numeric_correlation,mask)
 
 
     
-![png](output_128_0.png)
+![png](output_129_0.png)
     
 
 
@@ -4621,85 +4631,85 @@ for column in cancer_rate_transformed_numeric:
 
 
     
-![png](output_134_0.png)
+![png](output_135_0.png)
     
 
 
 
     
-![png](output_134_1.png)
+![png](output_135_1.png)
     
 
 
 
     
-![png](output_134_2.png)
+![png](output_135_2.png)
     
 
 
 
     
-![png](output_134_3.png)
+![png](output_135_3.png)
     
 
 
 
     
-![png](output_134_4.png)
+![png](output_135_4.png)
     
 
 
 
     
-![png](output_134_5.png)
+![png](output_135_5.png)
     
 
 
 
     
-![png](output_134_6.png)
+![png](output_135_6.png)
     
 
 
 
     
-![png](output_134_7.png)
+![png](output_135_7.png)
     
 
 
 
     
-![png](output_134_8.png)
+![png](output_135_8.png)
     
 
 
 
     
-![png](output_134_9.png)
+![png](output_135_9.png)
     
 
 
 
     
-![png](output_134_10.png)
+![png](output_135_10.png)
     
 
 
 
     
-![png](output_134_11.png)
+![png](output_135_11.png)
     
 
 
 
     
-![png](output_134_12.png)
+![png](output_135_12.png)
     
 
 
 
     
-![png](output_134_13.png)
+![png](output_135_13.png)
     
 
 
@@ -4789,79 +4799,79 @@ for column in cancer_rate_scaled_numeric:
 
 
     
-![png](output_140_0.png)
+![png](output_141_0.png)
     
 
 
 
     
-![png](output_140_1.png)
+![png](output_141_1.png)
     
 
 
 
     
-![png](output_140_2.png)
+![png](output_141_2.png)
     
 
 
 
     
-![png](output_140_3.png)
+![png](output_141_3.png)
     
 
 
 
     
-![png](output_140_4.png)
+![png](output_141_4.png)
     
 
 
 
     
-![png](output_140_5.png)
+![png](output_141_5.png)
     
 
 
 
     
-![png](output_140_6.png)
+![png](output_141_6.png)
     
 
 
 
     
-![png](output_140_7.png)
+![png](output_141_7.png)
     
 
 
 
     
-![png](output_140_8.png)
+![png](output_141_8.png)
     
 
 
 
     
-![png](output_140_9.png)
+![png](output_141_9.png)
     
 
 
 
     
-![png](output_140_10.png)
+![png](output_141_10.png)
     
 
 
 
     
-![png](output_140_11.png)
+![png](output_141_11.png)
     
 
 
 
     
-![png](output_140_12.png)
+![png](output_141_12.png)
     
 
 
@@ -5037,7 +5047,7 @@ plt.show()
 
 
     
-![png](output_152_0.png)
+![png](output_153_0.png)
     
 
 
@@ -5171,7 +5181,7 @@ display(cancer_rate_preprocessed_numeric_summary.sort_values(by=['Correlation.PV
     <tr>
       <th>CANRAT_FORARE</th>
       <td>0.165265</td>
-      <td>3.500993e-02</td>
+      <td>3.500992e-02</td>
     </tr>
     <tr>
       <th>CANRAT_AGRLND</th>
@@ -5405,7 +5415,7 @@ plt.show()
 
 
     
-![png](output_164_0.png)
+![png](output_165_0.png)
     
 
 
@@ -5543,7 +5553,411 @@ linear_regression.fit(X_train, y_train)
 
 
 
-<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">LinearRegression</label><div class="sk-toggleable__content"><pre>LinearRegression()</pre></div></div></div></div></div>
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;LinearRegression<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>LinearRegression()</pre></div> </div></div></div></div>
 
 
 
@@ -5659,7 +6073,7 @@ costs_minimum
 
 
 
-    0.23360776606114267
+    np.float64(0.23360776606114267)
 
 
 
@@ -5730,7 +6144,7 @@ plt.title('Full Batch: Learning Rate = 0.001');
 
 
     
-![png](output_180_0.png)
+![png](output_181_0.png)
     
 
 
@@ -5760,7 +6174,7 @@ for i in range(num_coeffs):
 
 
     
-![png](output_181_0.png)
+![png](output_182_0.png)
     
 
 
@@ -5776,7 +6190,7 @@ loss_vector_bgd_llearningrate
 
 
 
-    0.24303085033472172
+    np.float64(0.24303085033472172)
 
 
 
@@ -5893,7 +6307,7 @@ plt.title('Full Batch: Learning Rate = 0.100');
 
 
     
-![png](output_186_0.png)
+![png](output_187_0.png)
     
 
 
@@ -5923,7 +6337,7 @@ for i in range(num_coeffs):
 
 
     
-![png](output_187_0.png)
+![png](output_188_0.png)
     
 
 
@@ -5939,7 +6353,7 @@ loss_vector_bgd_hlearningrate
 
 
 
-    0.23360776605265446
+    np.float64(0.23360776605265446)
 
 
 
@@ -6080,7 +6494,7 @@ plt.title('Stochastic: Learning Rate = 0.001');
 
 
     
-![png](output_193_0.png)
+![png](output_194_0.png)
     
 
 
@@ -6111,7 +6525,7 @@ for i in range(num_coeffs):
 
 
     
-![png](output_194_0.png)
+![png](output_195_0.png)
     
 
 
@@ -6127,7 +6541,7 @@ loss_vector_sgd_llearningrate
 
 
 
-    0.2408007257287602
+    np.float64(0.24551481300414302)
 
 
 
@@ -6178,19 +6592,19 @@ display(linear_regression_sgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.014627</td>
+      <td>0.004912</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.314109</td>
+      <td>0.299775</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.338419</td>
+      <td>0.314713</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -6245,7 +6659,7 @@ plt.title('Stochastic: Learning Rate = 0.100');
 
 
     
-![png](output_199_0.png)
+![png](output_200_0.png)
     
 
 
@@ -6276,7 +6690,7 @@ for i in range(num_coeffs):
 
 
     
-![png](output_200_0.png)
+![png](output_201_0.png)
     
 
 
@@ -6292,7 +6706,7 @@ loss_vector_sgd_hlearningrate
 
 
 
-    0.24718123058927668
+    np.float64(0.23363119975676697)
 
 
 
@@ -6343,19 +6757,19 @@ display(linear_regression_sgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.128627</td>
+      <td>-0.034162</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.357930</td>
+      <td>0.260460</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.392653</td>
+      <td>0.510610</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6434,7 +6848,7 @@ plt.title('Mini-Batch: Learning Rate = 0.001');
 
 
     
-![png](output_206_0.png)
+![png](output_207_0.png)
     
 
 
@@ -6465,7 +6879,7 @@ for i in range(num_coeffs):
 
 
     
-![png](output_207_0.png)
+![png](output_208_0.png)
     
 
 
@@ -6481,7 +6895,7 @@ loss_vector_mbgd_llearningrate
 
 
 
-    0.243043097470057
+    np.float64(0.243043097470057)
 
 
 
@@ -6532,19 +6946,19 @@ display(linear_regression_mbgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.128627</td>
+      <td>-0.034162</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.357930</td>
+      <td>0.260460</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.392653</td>
+      <td>0.510610</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -6600,7 +7014,7 @@ plt.title('Mini-Batch: Learning Rate = 0.100');
 
 
     
-![png](output_212_0.png)
+![png](output_213_0.png)
     
 
 
@@ -6630,7 +7044,7 @@ for i in range(num_coeffs):
 
 
     
-![png](output_213_0.png)
+![png](output_214_0.png)
     
 
 
@@ -6646,7 +7060,7 @@ loss_vector_mbgd_hlearningrate
 
 
 
-    0.23425970066430957
+    np.float64(0.23425970066430957)
 
 
 
@@ -6697,19 +7111,19 @@ display(linear_regression_mbgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.128627</td>
+      <td>-0.034162</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.357930</td>
+      <td>0.260460</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.392653</td>
+      <td>0.510610</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6823,73 +7237,73 @@ display(linear_regression_methods)
     <tr>
       <th>9</th>
       <td>INTERCEPT</td>
-      <td>-0.014627</td>
+      <td>0.004912</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>10</th>
       <td>LIFEXP</td>
-      <td>0.314109</td>
+      <td>0.299775</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>11</th>
       <td>GDPCAP</td>
-      <td>0.338419</td>
+      <td>0.314713</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>12</th>
       <td>INTERCEPT</td>
-      <td>0.128627</td>
+      <td>-0.034162</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>13</th>
       <td>LIFEXP</td>
-      <td>0.357930</td>
+      <td>0.260460</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>14</th>
       <td>GDPCAP</td>
-      <td>0.392653</td>
+      <td>0.510610</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>15</th>
       <td>INTERCEPT</td>
-      <td>0.128627</td>
+      <td>-0.034162</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>16</th>
       <td>LIFEXP</td>
-      <td>0.357930</td>
+      <td>0.260460</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>17</th>
       <td>GDPCAP</td>
-      <td>0.392653</td>
+      <td>0.510610</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>18</th>
       <td>INTERCEPT</td>
-      <td>0.128627</td>
+      <td>-0.034162</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>19</th>
       <td>LIFEXP</td>
-      <td>0.357930</td>
+      <td>0.260460</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>20</th>
       <td>GDPCAP</td>
-      <td>0.392653</td>
+      <td>0.510610</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6953,30 +7367,30 @@ linear_regression_methods_plot
       <td>-0.030898</td>
       <td>-0.003588</td>
       <td>-0.030898</td>
-      <td>-0.014627</td>
-      <td>0.128627</td>
-      <td>0.128627</td>
-      <td>0.128627</td>
+      <td>0.004912</td>
+      <td>-0.034162</td>
+      <td>-0.034162</td>
+      <td>-0.034162</td>
     </tr>
     <tr>
       <th>LIFEXP</th>
       <td>0.249436</td>
       <td>0.305487</td>
       <td>0.249438</td>
-      <td>0.314109</td>
-      <td>0.357930</td>
-      <td>0.357930</td>
-      <td>0.357930</td>
+      <td>0.299775</td>
+      <td>0.260460</td>
+      <td>0.260460</td>
+      <td>0.260460</td>
     </tr>
     <tr>
       <th>GDPCAP</th>
       <td>0.517370</td>
       <td>0.327332</td>
       <td>0.517368</td>
-      <td>0.338419</td>
-      <td>0.392653</td>
-      <td>0.392653</td>
-      <td>0.392653</td>
+      <td>0.314713</td>
+      <td>0.510610</td>
+      <td>0.510610</td>
+      <td>0.510610</td>
     </tr>
   </tbody>
 </table>
@@ -6999,14 +7413,14 @@ for container in linear_regression_coefficent_estimation_methods_plot.containers
 
 
     
-![png](output_219_0.png)
+![png](output_220_0.png)
     
 
 
 # 2. Summary <a class="anchor" id="Summary"></a>
 
 
-![Project47_Summary.png](attachment:dbac6828-ae51-4ea9-9013-e9a2757e9f06.png)
+![Project47_Summary.png](dbac6828-ae51-4ea9-9013-e9a2757e9f06.png)
 
 # 3. References <a class="anchor" id="References"></a>
 
