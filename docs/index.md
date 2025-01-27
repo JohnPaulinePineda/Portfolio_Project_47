@@ -6541,7 +6541,7 @@ loss_vector_sgd_llearningrate
 
 
 
-    np.float64(0.24551481300414302)
+    np.float64(0.24109577281799918)
 
 
 
@@ -6592,19 +6592,19 @@ display(linear_regression_sgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>0.004912</td>
+      <td>0.005041</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.299775</td>
+      <td>0.305187</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.314713</td>
+      <td>0.345268</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -6706,7 +6706,7 @@ loss_vector_sgd_hlearningrate
 
 
 
-    np.float64(0.23363119975676697)
+    np.float64(0.2619685605234064)
 
 
 
@@ -6757,19 +6757,19 @@ display(linear_regression_sgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.034162</td>
+      <td>0.169979</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.260460</td>
+      <td>0.004367</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.510610</td>
+      <td>0.690416</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -6946,19 +6946,19 @@ display(linear_regression_mbgd_llearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.034162</td>
+      <td>0.169979</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.260460</td>
+      <td>0.004367</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.510610</td>
+      <td>0.690416</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
   </tbody>
@@ -7060,7 +7060,7 @@ loss_vector_mbgd_hlearningrate
 
 
 
-    np.float64(0.23425970066430957)
+    np.float64(0.2342597006643096)
 
 
 
@@ -7111,19 +7111,19 @@ display(linear_regression_mbgd_hlearningrate_summary)
     <tr>
       <th>0</th>
       <td>INTERCEPT</td>
-      <td>-0.034162</td>
+      <td>0.169979</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>1</th>
       <td>LIFEXP</td>
-      <td>0.260460</td>
+      <td>0.004367</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>2</th>
       <td>GDPCAP</td>
-      <td>0.510610</td>
+      <td>0.690416</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -7237,73 +7237,73 @@ display(linear_regression_methods)
     <tr>
       <th>9</th>
       <td>INTERCEPT</td>
-      <td>0.004912</td>
+      <td>0.005041</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>10</th>
       <td>LIFEXP</td>
-      <td>0.299775</td>
+      <td>0.305187</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>11</th>
       <td>GDPCAP</td>
-      <td>0.314713</td>
+      <td>0.345268</td>
       <td>StochasticGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>12</th>
       <td>INTERCEPT</td>
-      <td>-0.034162</td>
+      <td>0.169979</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>13</th>
       <td>LIFEXP</td>
-      <td>0.260460</td>
+      <td>0.004367</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>14</th>
       <td>GDPCAP</td>
-      <td>0.510610</td>
+      <td>0.690416</td>
       <td>StochasticGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>15</th>
       <td>INTERCEPT</td>
-      <td>-0.034162</td>
+      <td>0.169979</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>16</th>
       <td>LIFEXP</td>
-      <td>0.260460</td>
+      <td>0.004367</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>17</th>
       <td>GDPCAP</td>
-      <td>0.510610</td>
+      <td>0.690416</td>
       <td>MiniBatchGradientDescent_LowLearningRate</td>
     </tr>
     <tr>
       <th>18</th>
       <td>INTERCEPT</td>
-      <td>-0.034162</td>
+      <td>0.169979</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>19</th>
       <td>LIFEXP</td>
-      <td>0.260460</td>
+      <td>0.004367</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
     <tr>
       <th>20</th>
       <td>GDPCAP</td>
-      <td>0.510610</td>
+      <td>0.690416</td>
       <td>MiniBatchGradientDescent_HighLearningRate</td>
     </tr>
   </tbody>
@@ -7367,30 +7367,30 @@ linear_regression_methods_plot
       <td>-0.030898</td>
       <td>-0.003588</td>
       <td>-0.030898</td>
-      <td>0.004912</td>
-      <td>-0.034162</td>
-      <td>-0.034162</td>
-      <td>-0.034162</td>
+      <td>0.005041</td>
+      <td>0.169979</td>
+      <td>0.169979</td>
+      <td>0.169979</td>
     </tr>
     <tr>
       <th>LIFEXP</th>
       <td>0.249436</td>
       <td>0.305487</td>
       <td>0.249438</td>
-      <td>0.299775</td>
-      <td>0.260460</td>
-      <td>0.260460</td>
-      <td>0.260460</td>
+      <td>0.305187</td>
+      <td>0.004367</td>
+      <td>0.004367</td>
+      <td>0.004367</td>
     </tr>
     <tr>
       <th>GDPCAP</th>
       <td>0.517370</td>
       <td>0.327332</td>
       <td>0.517368</td>
-      <td>0.314713</td>
-      <td>0.510610</td>
-      <td>0.510610</td>
-      <td>0.510610</td>
+      <td>0.345268</td>
+      <td>0.690416</td>
+      <td>0.690416</td>
+      <td>0.690416</td>
     </tr>
   </tbody>
 </table>
@@ -7448,7 +7448,6 @@ for container in linear_regression_coefficent_estimation_methods_plot.containers
 * **[Python Library API]** [sklearn.model_selection](https://scikit-learn.org/stable/model_selection.html) by Scikit-Learn Team
 * **[Python Library API]** [sklearn.pipeline](https://scikit-learn.org/stable/modules/compose.html) by Scikit-Learn Team
 * **[Python Library API]** [scipy](https://docs.scipy.org/doc/scipy/) by SciPy Team
-* **[Article]** [Step-by-Step Exploratory Data Analysis (EDA) using Python](https://www.analyticsvidhya.com/blog/2022/07/step-by-step-exploratory-data-analysis-eda-using-python/#:~:text=Exploratory%20Data%20Analysis%20(EDA)%20with,distributions%20using%20Python%20programming%20language.) by Malamahadevan Mahadevan (Analytics Vidhya)
 * **[Article]** [Exploratory Data Analysis in Python — A Step-by-Step Process](https://towardsdatascience.com/exploratory-data-analysis-in-python-a-step-by-step-process-d0dfa6bf94ee) by Andrea D'Agostino (Towards Data Science)
 * **[Article]** [Exploratory Data Analysis with Python](https://medium.com/@douglas.rochedo/exploratory-data-analysis-with-python-78b6c1d479cc) by Douglas Rocha (Medium)
 * **[Article]** [4 Ways to Automate Exploratory Data Analysis (EDA) in Python](https://builtin.com/data-science/EDA-python) by Abdishakur Hassan (BuiltIn)
